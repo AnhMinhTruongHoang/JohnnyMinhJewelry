@@ -7,8 +7,8 @@ import {
   SliceComponentProps,
 } from "@prismicio/react";
 import { View } from "@react-three/drei";
-import Scene from "./Scene";
 import { Bounded } from "@/Components/Bounded";
+import Scene from "./Scene";
 
 /**
  * Props for `AlternatingText`.
@@ -31,7 +31,7 @@ const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
         </View>
 
         {/* Section 1 → Heading + Body (Ring bên trái / Text bên phải) */}
-        <section className="alternating-section ml-20 grid h-screen place-items-center gap-x-12 md:grid-cols-2">
+        <section className="alternating-section ml-24 grid h-screen place-items-center gap-x-12 md:grid-cols-2">
           {/* Text */}
           <div className="rounded-lg p-4 backdrop-blur-lg max-md:bg-white/30 md:col-start-2 md:ml-12">
             <h2 className="text-6xl font-bold text-[#5e2d2d]">

@@ -6,7 +6,7 @@ type Props = {};
 
 export default function Header({}: Props) {
   return (
-    <header className="flex items-center justify-between px-6 py-2 ">
+    <header className="flex items-center justify-between px-6 py-2">
       {/* Logo */}
       <div>
         <b>
@@ -14,7 +14,7 @@ export default function Header({}: Props) {
         </b>
       </div>
       <div>
-        <JmLogo className="h-20 cursor-pointer" />
+        <JmLogo className="h-24 cursor-pointer" />
       </div>
 
       {/* Menu + Icons */}

@@ -36,9 +36,7 @@ const FloatingRing = forwardRef<Group, FloatingRingProps>(
           floatingRange={floatingRange}
         >
           {children}
-          <group>
-            <RingModel scale={scale} />
-          </group>
+          <RingModel scale={scale} />
         </Float>
       </group>
     );
@@ -46,5 +44,5 @@ const FloatingRing = forwardRef<Group, FloatingRingProps>(
 );
 
 FloatingRing.displayName = "FloatingRing";
-///
+
 export default FloatingRing;
