@@ -1,62 +1,63 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
+import { Content } from "@prismicio/client";
+import {
+  PrismicRichText,
+  PrismicText,
+  SliceComponentProps,
+} from "@prismicio/react";
+import { View } from "@react-three/drei";
 import Scene from "./Scene";
-import { Suspense } from "react";
+import { Bounded } from "@/Components/Bounded";
 
-export default function JewelryLanding() {
+/**
+ * Props for `AlternatingText`.
+ */
+export type AlternatingTextProps = SliceComponentProps<Content.HeroSlice>;
+
+/**
+ * Component for "AlternatingText" Slice.
+ */
+const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
   return (
-    <div className="alternating-text-view relative h-screen w-full overflow-x-hidden">
-      <div className="alternating-text-container relative w-full">
-        {/* Section 1 → Ring bên trái / Text bên phải */}
-        <section className="alternating-section flex h-screen flex-col items-center justify-between px-6 md:flex-row-reverse md:px-16">
+    <Bounded
+      data-slice-type={slice.slice_type}
+      data-slice-variation={slice.variation}
+      className="alternating-text-container relative"
+    >
+      <div className="relative z-[100]">
+        <View className="alternating-text-view absolute left-0 top-0 h-screen w-full">
+          <Scene />
+        </View>
+
+        {/* Section 1 → Heading + Body (Ring bên trái / Text bên phải) */}
+        <section className="alternating-section ml-20 grid h-screen place-items-center gap-x-12 md:grid-cols-2">
           {/* Text */}
-          <div className="space-y-6 text-center md:w-1/2 md:text-left">
-            <h1 className="font-serif text-5xl font-bold leading-tight md:text-7xl">
-              UNIQUE <br />
-              <span className="text-[#5e2d2d]">JEWELRY</span>
-            </h1>
-            <p className="max-w-md text-base text-gray-700 md:text-lg">
-              Customize your unique ring with organic designs and pure lines
-              that combine to create the true beauty of the collection.
-            </p>
-            <button className="rounded-full border-2 border-black px-6 py-3 text-lg transition hover:bg-black hover:text-white">
-              Shop Now
-            </button>
+          <div className="rounded-lg p-4 backdrop-blur-lg max-md:bg-white/30 md:col-start-2 md:ml-12">
+            <h2 className="text-6xl font-bold text-[#5e2d2d]">
+              <PrismicText field={slice.primary.Heading} />
+            </h2>
+            <div className="mt-4 text-xl">
+              <PrismicRichText field={slice.primary.body} />
+            </div>
           </div>
-          {/* 3D Ring */}
-          <div className="flex h-[400px] justify-center md:h-[600px] md:w-1/2">
-            <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
-              <Suspense fallback={null}>
-                <Scene />
-              </Suspense>
-            </Canvas>
-          </div>  
         </section>
 
-        {/* Section 2 → Ring bên phải / Text bên trái */}
-        <section className="alternating-section flex h-screen flex-col items-center justify-between px-6 md:flex-row md:px-16">
+        {/* Section 2 → Second_Heading + Second_Body (Ring bên phải / Text bên trái) */}
+        <section className="alternating-section grid h-screen place-items-center gap-x-12 md:grid-cols-2">
           {/* Text */}
-          <div className="space-y-6 text-center md:w-1/2 md:text-left">
-            <h2 className="font-serif text-5xl font-bold leading-tight md:text-7xl">
-              created to last <br />
-              <span className="text-[#5e2d2d]">FOREVER</span>
+          <div className="rounded-lg p-4 backdrop-blur-lg max-md:bg-white/30 md:col-start-1">
+            <h2 className="text-6xl font-bold text-[#5e2d2d]">
+              <PrismicText field={slice.primary.second_heading} />
             </h2>
-            <p className="max-w-md text-base text-gray-700 md:text-lg">
-              Elegant, timeless, and created with love. Designed to endure and
-              shine for a lifetime.
-            </p>
-          </div>
-          {/* 3D Ring */}
-          <div className="flex h-[400px] justify-center md:h-[600px] md:w-1/2">
-            <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
-              <Suspense fallback={null}>
-                <Scene />
-              </Suspense>
-            </Canvas>
+            <div className="mt-4 text-xl">
+              <PrismicRichText field={slice.primary.second_body} />
+            </div>
           </div>
         </section>
       </div>
-    </div>
+    </Bounded>
   );
-}
+};
+
+export default AlternatingText;

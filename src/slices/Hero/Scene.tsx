@@ -1,6 +1,6 @@
 "use client";
 
-import { Environment } from "@react-three/drei";
+import { Environment, OrbitControls, Scroll } from "@react-three/drei";
 import { useRef } from "react";
 import { Group } from "three";
 import gsap from "gsap";
@@ -14,14 +14,14 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 type Props = {};
 
 export default function Scene({}: Props) {
-  const ringRef = useRef<Group>(null);
+  const canRef = useRef<Group>(null);
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
-  const bgColors = ["#E9CFF6", "#CBEF9A"];
+  const bgColors = ["#E9CFF6"];
 
   useGSAP(
     () => {
-      if (!ringRef.current) return;
+      if (!canRef.current) return;
 
       const sections = gsap.utils.toArray(".alternating-section");
 
@@ -37,7 +37,7 @@ export default function Scene({}: Props) {
       });
 
       sections.forEach((_, index) => {
-        if (!ringRef.current) return;
+        if (!canRef.current) return;
         if (index === 0) return;
 
         const isOdd = index % 2 !== 0;
@@ -45,13 +45,13 @@ export default function Scene({}: Props) {
         const xPosition = isDesktop ? (isOdd ? "-1" : "1") : 0;
         const yRotation = isDesktop ? (isOdd ? ".4" : "-.4") : 0;
         scrollTl
-          .to(ringRef.current.position, {
+          .to(canRef.current.position, {
             x: xPosition,
             ease: "circ.inOut",
             delay: 0.5,
           })
           .to(
-            ringRef.current.rotation,
+            canRef.current.rotation,
             {
               y: yRotation,
               ease: "back.inOut",
@@ -68,12 +68,12 @@ export default function Scene({}: Props) {
 
   return (
     <group
-      ref={ringRef}
+      ref={canRef}
       position-x={isDesktop ? 1 : 0}
       rotation-y={isDesktop ? -0.3 : 0}
     >
       <FloatingRing />
-      <Environment files={"/HDR/lobby.hdr"} environmentIntensity={1.5} />
+      <Environment files={"/hdr/lobby.hdr"} environmentIntensity={1.5} />
     </group>
   );
 }

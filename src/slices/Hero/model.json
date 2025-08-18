@@ -29,6 +29,24 @@
             "allowTargetBlank": true,
             "single": "em"
           }
+        },
+        "second_heading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Second_Heading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "heading1"
+          }
+        },
+        "second_body": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Second_Body",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "em"
+          }
         }
       },
       "items": {}

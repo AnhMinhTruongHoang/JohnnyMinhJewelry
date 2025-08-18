@@ -24,6 +24,28 @@
 						}
 					}
 				]
+			},
+			"second_heading": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading1",
+						"content": {
+							"text": "Interior"
+						}
+					}
+				]
+			},
+			"second_body": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Pariatur sit Lorem sunt enim aliqua nisi cupidatat aliquip dolor velit commodo."
+						}
+					}
+				]
 			}
 		},
 		"items": []
