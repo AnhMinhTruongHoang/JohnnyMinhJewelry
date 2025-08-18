@@ -17,8 +17,8 @@ type FloatingRingProps = {
 const FloatingRing = forwardRef<Group, FloatingRingProps>(
   (
     {
-      scale = 2,
-      floatSpeed = 1,
+      scale = 5,
+      floatSpeed = 2,
       rotationIntensity = 1,
       floatIntensity = 1,
       floatingRange = [-0.1, 0.1],
