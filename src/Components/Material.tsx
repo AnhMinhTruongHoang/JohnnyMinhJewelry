@@ -7,14 +7,14 @@ import {
 import { useLoader } from "@react-three/fiber";
 import { useMemo } from "react";
 
-type RingType = "gold" | "silver" | "ceramic" | "diamond";
+type MaterialType = "gold" | "silver" | "ceramic" | "diamond";
 
-type RingMaterialProps = {
-  type?: RingType;
+type MaterialProps = {
+  type?: MaterialType;
 };
 
 const TEXTURE_PATHS: Record<
-  RingType,
+  MaterialType,
   { base: string; normal: string; roughness: string; metalness: string }
 > = {
   gold: {
@@ -52,12 +52,12 @@ const TEXTURE_PATHS: Record<
   },
 };
 
-export default function useRingMaterial({ type = "gold" }: RingMaterialProps) {
+export default function useRingMaterial({ type = "gold" }: MaterialProps) {
   // Luôn có một type hợp lệ → luôn gọi hook theo cùng thứ tự
-  const safeType: RingType = (
+  const safeType: MaterialType = (
     ["gold", "silver", "ceramic", "diamond"] as const
-  ).includes(type as RingType)
-    ? (type as RingType)
+  ).includes(type as MaterialType)
+    ? (type as MaterialType)
     : "silver";
 
   const paths = TEXTURE_PATHS[safeType];
@@ -74,16 +74,16 @@ export default function useRingMaterial({ type = "gold" }: RingMaterialProps) {
   return useMemo(() => {
     if (safeType === "diamond") {
       return new MeshPhysicalMaterial({
-        map: base,
-        normalMap: normal,
-        roughnessMap: roughness,
-        metalnessMap: metalness,
+        color: "#ffffff", // Giữ trong suốt
+        normalMap: normal, // Giữ normal để facet đẹp
         transparent: true,
-        transmission: 0.95,
-        ior: 2.4,
-        thickness: 0.5,
-        roughness: 0,
-        metalness: 0,
+        transmission: 1, // 100% xuyên sáng
+        ior: 2.4, // Chỉ số khúc xạ của diamond
+        thickness: 0.8, // Độ dày ảo
+        roughness: 0, // Siêu bóng
+        metalness: 0, // Diamond không phải kim loại
+        reflectivity: 1,
+        envMapIntensity: 1.5, // Cho phản chiếu sáng hơn
       });
     }
 

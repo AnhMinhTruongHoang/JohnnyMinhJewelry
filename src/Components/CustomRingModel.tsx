@@ -1,7 +1,7 @@
 "use client";
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
-import useRingMaterial from "./RingMaterial";
+import useRingMaterial from "./Material";
 
 useGLTF.preload("/Models/rings/source/RING_custom.glb");
 

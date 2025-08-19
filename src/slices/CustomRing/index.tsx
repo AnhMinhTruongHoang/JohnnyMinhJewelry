@@ -48,7 +48,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
           <OrbitControls />
           <Environment
             files={"/HDR/lobby.hdr"}
-            environmentIntensity={1.5}
+            environmentIntensity={1}
             background={false}
           />
         </Canvas>
