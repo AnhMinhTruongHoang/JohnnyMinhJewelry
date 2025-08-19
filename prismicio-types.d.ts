@@ -69,7 +69,7 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type PageDocumentDataSlicesSlice = HeroSlice;
+type PageDocumentDataSlicesSlice = CustomRingSlice | HeroSlice;
 
 /**
  * Content for Page documents
@@ -142,6 +142,51 @@ export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
 export type AllDocumentTypes = PageDocument;
+
+/**
+ * Primary content in *CustomRing → Default → Primary*
+ */
+export interface CustomRingSliceDefaultPrimary {
+  /**
+   * Heading field in *CustomRing → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: custom_ring.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+}
+
+/**
+ * Default variation for CustomRing Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CustomRingSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<CustomRingSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *CustomRing*
+ */
+type CustomRingSliceVariation = CustomRingSliceDefault;
+
+/**
+ * CustomRing Shared Slice
+ *
+ * - **API ID**: `custom_ring`
+ * - **Description**: CustomRing
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CustomRingSlice = prismic.SharedSlice<
+  "custom_ring",
+  CustomRingSliceVariation
+>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -240,6 +285,10 @@ declare module "@prismicio/client" {
       PageDocumentData,
       PageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      CustomRingSlice,
+      CustomRingSliceDefaultPrimary,
+      CustomRingSliceVariation,
+      CustomRingSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,

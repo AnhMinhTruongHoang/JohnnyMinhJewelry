@@ -3,5 +3,6 @@
 import dynamic from "next/dynamic";
 
 export const components = {
+  custom_ring: dynamic(() => import("./CustomRing")),
   hero: dynamic(() => import("./Hero")),
 };
