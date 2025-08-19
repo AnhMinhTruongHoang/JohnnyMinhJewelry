@@ -10,7 +10,7 @@ export default function FullScreenLoader() {
   useEffect(() => {
     if (progress === 100) {
       // delay 100ms để tránh flicker
-      const timeout = setTimeout(() => setShow(false), 100);
+      const timeout = setTimeout(() => setShow(false), 50);
       return () => clearTimeout(timeout);
     }
   }, [progress]);

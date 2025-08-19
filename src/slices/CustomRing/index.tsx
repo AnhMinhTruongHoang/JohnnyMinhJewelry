@@ -1,10 +1,10 @@
 "use client";
-import { FC, Suspense, useState } from "react";
+import { FC, Suspense, useEffect, useState } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import MaterialSelector from "./meterial.change";
 import CustomRingModel from "@/Components/CustomRingModel";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 
 /**
@@ -24,17 +24,17 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       className="relative flex min-h-screen flex-col items-center justify-center bg-gray-50"
     >
       {/* Heading */}
-      <div className="mb-6 text-center">
+      <h1 className="mb-6 text-center font-serif text-6xl">
         <PrismicRichText field={slice.primary.heading} />
-      </div>
+      </h1>
 
       {/* Model nhẫn */}
       <div className="flex h-[500px] w-full items-center justify-center">
-        <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+        <Canvas camera={{ position: [1, 1, 0], fov: 45 }}>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
-            <CustomRingModel materialType={materialType} scale={1.5} />
+            <CustomRingModel materialType={materialType} scale={3} />
           </Suspense>
           <OrbitControls />
         </Canvas>

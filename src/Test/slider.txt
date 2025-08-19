@@ -1,0 +1,48 @@
+"use client";
+
+import { FC } from "react";
+
+type Props = {
+  onChange: (type: "gold" | "silver" | "ceramic") => void;
+};
+
+const MaterialSelector: FC<Props> = ({ onChange }) => {
+  const materials: ("gold" | "silver" | "ceramic")[] = [
+    "gold",
+    "silver",
+    "ceramic",
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const index = parseInt(e.target.value, 10);
+    onChange(materials[index]);
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      {/* Slider */}
+
+      <input
+        name="range"
+        type="range"
+        min={0}
+        max={2}
+        step={1}
+        defaultValue={0}
+        onChange={handleChange}
+        className="w-64 accent-black"
+        aria-label="Material selector"
+        title="Select ring material"
+      />
+
+      {/* Labels */}
+      <div className="flex w-64 justify-between text-sm text-gray-700">
+        <span>Gold</span>
+        <span>Silver</span>
+        <span>Ceramic</span>
+      </div>
+    </div>
+  );
+};
+
+export default MaterialSelector;
