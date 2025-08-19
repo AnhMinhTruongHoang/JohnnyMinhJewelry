@@ -7,7 +7,6 @@ type RingModelProps = JSX.IntrinsicElements["group"] & {
 
 export default function RingModel({ scale = 1, ...props }: RingModelProps) {
   const { scene } = useGLTF("/Models/rings/source/RING.glb");
-
   return <primitive object={scene} scale={scale} {...props} />;
 }
 

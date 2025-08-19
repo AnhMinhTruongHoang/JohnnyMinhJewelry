@@ -1,53 +1,51 @@
-import { FC } from "react";
+"use client";
+import { FC, Suspense, useState } from "react";
 import { Content } from "@prismicio/client";
-import { SliceComponentProps } from "@prismicio/react";
+import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
+import MaterialSelector from "./meterial.change";
+import CustomRingModel from "@/Components/CustomRingModel";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
 /**
  * Props for `CustomRing`.
  */
 export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
-/**
- * Component for "CustomRing" Slices.
- */
-const CustomRing: FC<CustomRingProps> = ({ slice }) => {
+const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
+  const [materialType, setMaterialType] = useState<
+    "gold" | "silver" | "ceramic"
+  >("gold");
+
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
+      className="relative flex min-h-screen flex-col items-center justify-center bg-gray-50"
     >
-      Placeholder component for custom_ring (variation: {slice.variation})
-      slices.
-      <br />
-      <strong>You can edit this slice directly in your code editor.</strong>
-      {/**
-       * 💡 Use Prismic MCP with your code editor
-       *
-       * Get AI-powered help to build your slice components — based on your actual model.
-       *
-       * ▶️ Setup:
-       * 1. Add a new MCP Server in your code editor:
-       *
-       * {
-       *   "mcpServers": {
-       *     "Prismic MCP": {
-       *       "command": "npx",
-       *       "args": ["-y", "@prismicio/mcp-server@latest"]
-       *     }
-       *   }
-       * }
-       *
-       * 2. Select a model optimized for coding (e.g. Claude 3.7 Sonnet or similar)
-       *
-       * ✅ Then open your slice file and ask your code editor:
-       *    "Code this slice"
-       *
-       * Your code editor reads your slice model and helps you code faster ⚡
-       * 🎙️ Give your feedback: https://community.prismic.io/t/help-us-shape-the-future-of-slice-creation/19505
-       * 📚 Documentation: https://prismic.io/docs/ai#code-with-prismics-mcp-server
-       */}
+      {/* Heading */}
+      <div className="mb-6 text-center">
+        <PrismicRichText field={slice.primary.heading} />
+      </div>
+
+      {/* Model nhẫn */}
+      <div className="flex h-[500px] w-full items-center justify-center">
+        <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} />
+          <Suspense fallback={null}>
+            <CustomRingModel materialType={materialType} scale={1.5} />
+          </Suspense>
+          <OrbitControls />
+        </Canvas>
+      </div>
+
+      {/* Material selector */}
+      <div className="mt-6">
+        <MaterialSelector onChange={setMaterialType} />
+      </div>
     </section>
   );
 };
 
-export default CustomRing;
+export default CustomRingSlice;
