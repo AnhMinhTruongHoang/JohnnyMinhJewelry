@@ -1,5 +1,4 @@
 "use client";
-
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 import useRingMaterial from "./RingMaterial";
@@ -8,38 +7,43 @@ useGLTF.preload("/Models/rings/source/RING_custom.glb");
 
 type CustomRingModelProps = {
   scale?: number;
-  materialMapping: Record<string, "gold" | "silver" | "ceramic" | "diamond">;
+  materialMapping?: Record<string, "gold" | "silver" | "ceramic" | "diamond">;
 };
 
 export default function CustomRingModel({
   scale = 1.2,
-  materialMapping,
+  materialMapping = {},
 }: CustomRingModelProps) {
   const { scene } = useGLTF("/Models/rings/source/RING_custom.glb");
 
-  // tạo trước materials cần dùng
-  const materials = useMemo(() => {
-    const mats: Record<string, any> = {};
-    Object.values(materialMapping).forEach((type) => {
-      if (!mats[type]) {
-        mats[type] = useRingMaterial({ type });
-      }
-    });
-    return mats;
-  }, [materialMapping]);
+  // Gọi từng hook useRingMaterial riêng biệt ở top-level
+  const goldMat = useRingMaterial({ type: "gold" });
+  const silverMat = useRingMaterial({ type: "silver" });
+  const ceramicMat = useRingMaterial({ type: "ceramic" });
+  const diamondMat = useRingMaterial({ type: "diamond" });
+
+  const materialCache = useMemo(
+    () => ({
+      gold: goldMat,
+      silver: silverMat,
+      ceramic: ceramicMat,
+      diamond: diamondMat,
+    }),
+    [goldMat, silverMat, ceramicMat, diamondMat],
+  );
 
   useEffect(() => {
     if (!scene) return;
 
     scene.traverse((child: any) => {
       if (child.isMesh) {
-        const type = materialMapping[child.name];
-        if (type && materials[type]) {
-          child.material = materials[type];
+        const matType = materialMapping[child.name];
+        if (matType) {
+          child.material = materialCache[matType];
         }
       }
     });
-  }, [scene, materialMapping, materials]);
+  }, [scene, materialMapping, materialCache]);
 
   return <primitive object={scene} scale={scale} />;
 }

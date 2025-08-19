@@ -42,7 +42,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
-            <CustomRingModel materialMapping={materialMapping} scale={3} />
+            <CustomRingModel scale={3} materialMapping={materialMapping} />
           </Suspense>
           <OrbitControls />
           <Environment
