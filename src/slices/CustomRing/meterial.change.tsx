@@ -52,9 +52,9 @@ const RingMaterialSelector: FC<Props> = ({ parts, onChange }) => {
       <table className="w-full border border-gray-300 text-center">
         <thead>
           <tr className="bg-gray-100">
-            <th className="border px-4 py-2">Phần nhẫn</th>
+            <th className="border px-4 py-2">Parts</th>
             <th className="border px-4 py-2">Material</th>
-            <th className="border px-4 py-2">Chọn</th>
+            <th className="border px-4 py-2">Change</th>
           </tr>
         </thead>
         <tbody>
