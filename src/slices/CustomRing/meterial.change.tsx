@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useState } from "react";
-import { Button } from "@/Components/ui/button";
+import { Button } from "@/ui/button";
 
 type RingPart = {
   name: string;

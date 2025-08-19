@@ -31,19 +31,24 @@ export default function CustomRingModel({
     }),
     [goldMat, silverMat, ceramicMat, diamondMat],
   );
-
+  ///////////
   useEffect(() => {
     if (!scene) return;
 
+    const meshNames: string[] = [];
+
     scene.traverse((child: any) => {
       if (child.isMesh) {
+        meshNames.push(child.name); // Lưu tên mesh
         const matType = materialMapping[child.name];
         if (matType) {
           child.material = materialCache[matType];
         }
       }
     });
-  }, [scene, materialMapping, materialCache]);
 
+    // console.log("All mesh parts:", meshNames);
+  }, [scene, materialMapping, materialCache]);
+  /////////////
   return <primitive object={scene} scale={scale} />;
 }

@@ -24,6 +24,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     dobj003: "diamond",
     Prong001: "ceramic",
   });
+
   ////
   return (
     <section
@@ -57,10 +58,14 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       <div className="mt-6">
         <MaterialSelector
           parts={[
+            { name: "Circle006", label: "Circle" },
             { name: "Circle001", label: "Ring band" },
             { name: "dobj", label: "Pattern 1" },
             { name: "dobj001", label: "Pattern 2" },
+            { name: "Circle", label: "Mini stone" },
             { name: "Prong001", label: "Stone prong" },
+            { name: "dobj003", label: "Hearth" },
+            { name: "Circle006_1", label: "Name" },
           ]}
           onChange={(partName, material) => {
             setMaterialMapping((prev) => ({
