@@ -3,9 +3,9 @@
 import { Float, useGLTF } from "@react-three/drei";
 import { forwardRef, ReactNode } from "react";
 import { Group } from "three";
-import RingModel from "./ring";
+import CrossNecklaceModel from "./crossNecklace";
 
-type FloatingRingProps = {
+type FloatingNecklaceProps = {
   scale?: number;
   floatSpeed?: number;
   rotationIntensity?: number;
@@ -14,9 +14,9 @@ type FloatingRingProps = {
   children?: ReactNode;
 } & JSX.IntrinsicElements["group"];
 
-useGLTF.preload("/Models/rings/source/RING.glb");
+useGLTF.preload("/Models/necklace/source/crossNecklace.glb");
 
-const FloatingRing = forwardRef<Group, FloatingRingProps>(
+const FloatingNecklace = forwardRef<Group, FloatingNecklaceProps>(
   (
     {
       scale = 5,
@@ -38,13 +38,13 @@ const FloatingRing = forwardRef<Group, FloatingRingProps>(
           floatingRange={floatingRange}
         >
           {children}
-          <RingModel scale={scale} />
+          <CrossNecklaceModel scale={scale} />
         </Float>
       </group>
     );
   },
 );
 
-FloatingRing.displayName = "FloatingRing";
+FloatingNecklace.displayName = "FloatingNecklace";
 
-export default FloatingRing;
+export default FloatingNecklace;

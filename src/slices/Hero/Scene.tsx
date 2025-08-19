@@ -3,40 +3,31 @@
 import { Environment } from "@react-three/drei";
 import { useRef } from "react";
 import { Group } from "three";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import FloatingRing from "@/Components/floating.ring";
 import { useFrame } from "@react-three/fiber";
+import FloatingRing from "@/Components/floating.ring";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+type Props = {
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: number;
+};
 
-type Props = {};
-
-export default function Scene({}: Props) {
-  const RingRef = useRef<Group>(null);
+export default function SceneRing({
+  position = [-0.75, 0, 1],
+  rotation = [0, 0.3, 0.5],
+  scale = 1,
+}: Props) {
+  const ringRef = useRef<Group>(null);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    if (RingRef.current) {
-      RingRef.current.position.y = Math.sin(t) * 0.1; // float lên xuống
+    if (ringRef.current) {
+      ringRef.current.position.y = position[1] + Math.sin(t) * 0.1;
     }
   });
 
   return (
-    <group
-      ref={RingRef}
-      position-x={-1}
-      position-y={1} // 👈 lên/xuống
-      position-z={0} // 👈 ra trước / lùi sau camera
-      // 👉 Góc xoay ban đầu (radian):
-      rotation-y={0.3} // 👈 xoay qua trái/phải
-      rotation-x={0} // 👈 ngửa lên/xuống
-      rotation-z={0.5} // 👈 xoay nghiêng
-      // 👉 Scale toàn bộ group:
-      scale={1.2} // 👈 tăng lên 2.0 cho to hơn
-    >
+    <group ref={ringRef} position={position} rotation={rotation} scale={scale}>
       <FloatingRing scale={6} />
       <Environment files={"/HDR/lobby.hdr"} environmentIntensity={1.5} />
     </group>
