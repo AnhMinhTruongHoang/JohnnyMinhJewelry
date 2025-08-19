@@ -11,7 +11,7 @@ type CustomRingModelProps = {
 };
 
 export default function CustomRingModel({
-  scale = 1.2,
+  scale = 1,
   materialMapping = {},
 }: CustomRingModelProps) {
   const { scene } = useGLTF("/Models/rings/source/RING_custom.glb");
@@ -50,5 +50,12 @@ export default function CustomRingModel({
     // console.log("All mesh parts:", meshNames);
   }, [scene, materialMapping, materialCache]);
   /////////////
-  return <primitive object={scene} scale={scale} />;
+  return (
+    <primitive
+      object={scene}
+      scale={scale}
+      onPointerOver={() => (document.body.style.cursor = "grab")}
+      onPointerOut={() => (document.body.style.cursor = "default")}
+    />
+  );
 }

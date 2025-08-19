@@ -33,7 +33,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       className="relative flex min-h-screen flex-col items-center justify-center bg-gray-400"
     >
       {/* Heading */}
-      <div className="mb-6 text-center font-serif text-6xl">
+      <div className="mb-6 mt-6 text-center font-serif text-6xl">
         <PrismicRichText field={slice.primary.heading} />
       </div>
 
@@ -55,7 +55,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       </div>
 
       {/* Material selector */}
-      <div className="mt-6">
+      <div className="mb-5 mt-5">
         <MaterialSelector
           parts={[
             { name: "Circle006", label: "Circle" },
