@@ -57,10 +57,10 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       <div className="mt-6">
         <MaterialSelector
           parts={[
-            { name: "Circle001", label: "Thân nhẫn" },
-            { name: "dobj", label: "Họa tiết 1" },
-            { name: "dobj001", label: "Họa tiết 2" },
-            { name: "Prong001", label: "Ngàm giữ đá" },
+            { name: "Circle001", label: "Ring band" },
+            { name: "dobj", label: "Pattern 1" },
+            { name: "dobj001", label: "Pattern 2" },
+            { name: "Prong001", label: "Stone prong" },
           ]}
           onChange={(partName, material) => {
             setMaterialMapping((prev) => ({
