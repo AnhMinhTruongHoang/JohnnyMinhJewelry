@@ -14,7 +14,7 @@ export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
   const [materialType, setMaterialType] = useState<
-    "gold" | "silver" | "ceramic"
+    "gold" | "silver" | "ceramic" | "diamond"
   >("gold");
 
   return (
@@ -24,9 +24,9 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       className="relative flex min-h-screen flex-col items-center justify-center bg-gray-50"
     >
       {/* Heading */}
-      <h1 className="mb-6 text-center font-serif text-6xl">
+      <div className="mb-6 text-center font-serif text-6xl">
         <PrismicRichText field={slice.primary.heading} />
-      </h1>
+      </div>
 
       {/* Model nhẫn */}
       <div className="flex h-[500px] w-full items-center justify-center">
@@ -42,7 +42,18 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
 
       {/* Material selector */}
       <div className="mt-6">
-        <MaterialSelector onChange={setMaterialType} />
+        <MaterialSelector
+          parts={[
+            { name: "Circle001", label: "Thân nhẫn" },
+            { name: "dobj", label: "Họa tiết 1" },
+            { name: "dobj001", label: "Họa tiết 2" },
+            { name: "Prong001", label: "Ngàm giữ đá" },
+          ]}
+          onChange={(partName, material) => {
+            console.log("Part:", partName, "→", material);
+            // ở đây bạn có thể truyền material mapping xuống CustomRingModel
+          }}
+        />
       </div>
     </section>
   );

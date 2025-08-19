@@ -29,7 +29,7 @@ export default function SceneCustomRing({
   return (
     <group ref={ringRef} position={position} rotation={rotation} scale={scale}>
       <CustomRingModel scale={6} />
-      <Environment files={"/HDR/lobby.hdr"} environmentIntensity={1.5} />
+      <Environment files={"/HDR/lobby.hdr"} environmentIntensity={5} />
     </group>
   );
 }

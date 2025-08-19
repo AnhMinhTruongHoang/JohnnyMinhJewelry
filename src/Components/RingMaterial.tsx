@@ -3,7 +3,7 @@ import { TextureLoader, MeshStandardMaterial } from "three";
 import { useLoader } from "@react-three/fiber";
 
 type RingMaterialProps = {
-  type?: "gold" | "silver" | "ceramic";
+  type?: "gold" | "silver" | "ceramic" | "diamond";
 };
 
 export default function useRingMaterial({ type = "gold" }: RingMaterialProps) {
@@ -34,6 +34,13 @@ export default function useRingMaterial({ type = "gold" }: RingMaterialProps) {
         "/Models/rings/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Roughness.jpg",
       metalness:
         "/Models/rings/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Metallic.jpg",
+    },
+    diamond: {
+      base: "/Models/rings/textures/diamond/Image_0_2@channels=G.jpeg",
+      normal: "/Models/rings/textures/diamond/Image_1_0.jpeg",
+      roughness: "/Models/rings/textures/diamond/Image_1_1.png",
+      metalness:
+        "/Models/rings/textures/silver/Poliigon_MetalSteelBrushed_7174_Metallic.jpg",
     },
   };
 
