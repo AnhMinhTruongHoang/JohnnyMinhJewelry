@@ -1,11 +1,11 @@
 "use client";
-import { FC, Suspense, useEffect, useState } from "react";
+import { FC, Suspense, useState } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import MaterialSelector from "./meterial.change";
 import CustomRingModel from "@/Components/CustomRingModel";
-import { Canvas, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls } from "@react-three/drei";
 
 /**
  * Props for `CustomRing`.
@@ -13,10 +13,18 @@ import { OrbitControls } from "@react-three/drei";
 export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
-  const [materialType, setMaterialType] = useState<
-    "gold" | "silver" | "ceramic" | "diamond"
-  >("gold");
-
+  const [materialMapping, setMaterialMapping] = useState<
+    Record<string, "gold" | "silver" | "ceramic" | "diamond">
+  >({
+    Circle001: "gold",
+    Circle002: "gold",
+    Circle004: "gold",
+    dobj: "diamond",
+    dobj001: "diamond",
+    dobj003: "diamond",
+    Prong001: "ceramic",
+  });
+  ////
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -34,9 +42,14 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
-            <CustomRingModel materialType={materialType} scale={3} />
+            <CustomRingModel materialMapping={materialMapping} scale={3} />
           </Suspense>
           <OrbitControls />
+          <Environment
+            files={"/HDR/lobby.hdr"}
+            environmentIntensity={1.5}
+            background={false}
+          />
         </Canvas>
       </div>
 
@@ -50,8 +63,10 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
             { name: "Prong001", label: "Ngàm giữ đá" },
           ]}
           onChange={(partName, material) => {
-            console.log("Part:", partName, "→", material);
-            // ở đây bạn có thể truyền material mapping xuống CustomRingModel
+            setMaterialMapping((prev) => ({
+              ...prev,
+              [partName]: material,
+            }));
           }}
         />
       </div>

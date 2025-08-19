@@ -1,6 +1,11 @@
 "use client";
-import { TextureLoader, MeshStandardMaterial } from "three";
+import {
+  TextureLoader,
+  MeshStandardMaterial,
+  MeshPhysicalMaterial,
+} from "three";
 import { useLoader } from "@react-three/fiber";
+import { useMemo } from "react";
 
 type RingMaterialProps = {
   type?: "gold" | "silver" | "ceramic" | "diamond";
@@ -51,10 +56,29 @@ export default function useRingMaterial({ type = "gold" }: RingMaterialProps) {
     texturePaths[type].metalness,
   ]);
 
-  return new MeshStandardMaterial({
-    map: base,
-    normalMap: normal,
-    roughnessMap: roughness,
-    metalnessMap: metalness,
-  });
+  return useMemo(() => {
+    if (type === "diamond") {
+      return new MeshPhysicalMaterial({
+        map: base,
+        normalMap: normal,
+        roughnessMap: roughness,
+        metalnessMap: metalness,
+        transparent: true,
+        transmission: 0.95, // độ xuyên sáng (gần như trong suốt)
+        ior: 2.4, // chiết suất kim cương
+        thickness: 0.5,
+        roughness: 0,
+        metalness: 0,
+      });
+    }
+
+    return new MeshStandardMaterial({
+      map: base,
+      normalMap: normal,
+      roughnessMap: roughness,
+      metalnessMap: metalness,
+      metalness: type === "ceramic" ? 0 : 1,
+      roughness: type === "ceramic" ? 0.4 : 0.15,
+    });
+  }, [type, base, normal, roughness, metalness]);
 }
