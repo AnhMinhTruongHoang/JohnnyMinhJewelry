@@ -29,7 +29,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative flex min-h-screen flex-col items-center justify-center bg-gray-50"
+      className="relative flex min-h-screen flex-col items-center justify-center bg-gray-400"
     >
       {/* Heading */}
       <div className="mb-6 text-center font-serif text-6xl">
