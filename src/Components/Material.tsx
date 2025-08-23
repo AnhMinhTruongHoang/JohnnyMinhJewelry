@@ -5,7 +5,7 @@ import {
   MeshPhysicalMaterial,
 } from "three";
 import { useLoader } from "@react-three/fiber";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 type MaterialType = "gold" | "silver" | "ceramic" | "diamond";
 
@@ -53,7 +53,6 @@ const TEXTURE_PATHS: Record<
 };
 
 export default function useRingMaterial({ type = "gold" }: MaterialProps) {
-  // Luôn có một type hợp lệ → luôn gọi hook theo cùng thứ tự
   const safeType: MaterialType = (
     ["gold", "silver", "ceramic", "diamond"] as const
   ).includes(type as MaterialType)
@@ -62,7 +61,6 @@ export default function useRingMaterial({ type = "gold" }: MaterialProps) {
 
   const paths = TEXTURE_PATHS[safeType];
 
-  // useLoader luôn được gọi (không return sớm)
   const [base, normal, roughness, metalness] = useLoader(TextureLoader, [
     paths.base,
     paths.normal,
@@ -70,30 +68,39 @@ export default function useRingMaterial({ type = "gold" }: MaterialProps) {
     paths.metalness,
   ]);
 
-  // Chỉ tạo material trong useMemo (không gọi hook bên trong)
-  return useMemo(() => {
+  // tạo material
+  const material = useMemo(() => {
     if (safeType === "diamond") {
       return new MeshPhysicalMaterial({
-        color: "#ffffff", // Giữ trong suốt
-        normalMap: normal, // Giữ normal để facet đẹp
+        map: base,
+        normalMap: normal,
+        roughnessMap: roughness,
+        metalnessMap: metalness,
         transparent: true,
-        transmission: 1, // 100% xuyên sáng
-        ior: 2.4, // Chỉ số khúc xạ của diamond
-        thickness: 0.8, // Độ dày ảo
-        roughness: 0, // Siêu bóng
-        metalness: 0, // Diamond không phải kim loại
-        reflectivity: 1,
-        envMapIntensity: 1.5, // Cho phản chiếu sáng hơn
+        transmission: 0.95,
+        ior: 2.4,
+        thickness: 0.5,
+        roughness: 0,
+        metalness: 0,
+      });
+    } else {
+      return new MeshStandardMaterial({
+        map: base,
+        normalMap: normal,
+        roughnessMap: roughness,
+        metalnessMap: metalness,
+        metalness: safeType === "ceramic" ? 0 : 1,
+        roughness: safeType === "ceramic" ? 0.4 : 0.15,
       });
     }
-
-    return new MeshStandardMaterial({
-      map: base,
-      normalMap: normal,
-      roughnessMap: roughness,
-      metalnessMap: metalness,
-      metalness: safeType === "ceramic" ? 0 : 1,
-      roughness: safeType === "ceramic" ? 0.4 : 0.15,
-    });
   }, [safeType, base, normal, roughness, metalness]);
+
+  //cleanup: dispose khi material thay đổi
+  useEffect(() => {
+    return () => {
+      material.dispose();
+    };
+  }, [material]);
+
+  return material;
 }

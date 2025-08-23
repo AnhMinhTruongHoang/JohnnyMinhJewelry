@@ -2,7 +2,7 @@
 import { FC, Suspense, useState } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
-import MaterialSelector from "./meterial.change";
+import MaterialSelector from "./material.change";
 import CustomRingModel from "@/Components/CustomRingModel";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";

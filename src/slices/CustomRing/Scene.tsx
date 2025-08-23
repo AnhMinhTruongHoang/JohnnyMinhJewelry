@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { Group } from "three";
 import { useFrame } from "@react-three/fiber";
 import CustomRingModel from "@/Components/CustomRingModel";
+import EngravingText from "@/Components/EngravingText";
 
 type Props = {
   position?: [number, number, number];
@@ -29,6 +30,11 @@ export default function SceneCustomRing({
   return (
     <group ref={ringRef} position={position} rotation={rotation} scale={scale}>
       <CustomRingModel scale={6} />
+      <EngravingText
+        text="MINH ANH"
+        position={[0, 0.3, 1]}
+        rotation={[0, Math.PI / 2, 0]}
+      />
       <Environment files={"/HDR/lobby.hdr"} environmentIntensity={3} />
     </group>
   );
