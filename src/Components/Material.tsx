@@ -62,7 +62,7 @@ const TEXTURE_PATHS: Record<
   },
 };
 
-export default function useRingMaterial({ type = "gold" }: MaterialProps) {
+export default function useMaterial({ type = "gold" }: MaterialProps) {
   const safeType: MaterialType = (
     ["gold", "silver", "ceramic", "diamond", "wood", "metal"] as const
   ).includes(type as MaterialType)

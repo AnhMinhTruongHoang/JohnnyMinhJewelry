@@ -27,6 +27,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "custom_necklace": {
+              "type": "SharedSlice"
+            },
             "custom_ring": {
               "type": "SharedSlice"
             },

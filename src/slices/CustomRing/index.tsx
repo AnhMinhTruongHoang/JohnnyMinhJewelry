@@ -14,7 +14,7 @@ export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
   const [materialMapping, setMaterialMapping] = useState<
-    Record<string, "gold" | "silver" | "ceramic" | "diamond">
+    Record<string, "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood">
   >({
     Circle001: "gold",
     Circle002: "gold",

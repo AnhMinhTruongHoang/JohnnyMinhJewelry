@@ -28,8 +28,8 @@ type PickContentRelationshipFieldData<
       TSubRelationship["customtypes"],
       TLang
     >;
-  } & {
-    // Group
+  } & // Group
+  {
     [TGroup in Extract<
       TRelationship["fields"][number],
       | prismic.CustomTypeModelFetchGroupLevel1
@@ -41,8 +41,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & {
-    // Other fields
+  } & // Other fields
+  {
     [TFieldKey in Extract<
       TRelationship["fields"][number],
       string
@@ -69,7 +69,10 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type PageDocumentDataSlicesSlice = CustomRingSlice | HeroSlice;
+type PageDocumentDataSlicesSlice =
+  | CustomNecklaceSlice
+  | CustomRingSlice
+  | HeroSlice;
 
 /**
  * Content for Page documents
@@ -142,6 +145,51 @@ export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
 export type AllDocumentTypes = PageDocument;
+
+/**
+ * Primary content in *CustomNecklace → Default → Primary*
+ */
+export interface CustomNecklaceSliceDefaultPrimary {
+  /**
+   * Heading field in *CustomNecklace → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: custom_necklace.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+}
+
+/**
+ * Default variation for CustomNecklace Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CustomNecklaceSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<CustomNecklaceSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *CustomNecklace*
+ */
+type CustomNecklaceSliceVariation = CustomNecklaceSliceDefault;
+
+/**
+ * CustomNecklace Shared Slice
+ *
+ * - **API ID**: `custom_necklace`
+ * - **Description**: CustomNecklace
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CustomNecklaceSlice = prismic.SharedSlice<
+  "custom_necklace",
+  CustomNecklaceSliceVariation
+>;
 
 /**
  * Primary content in *CustomRing → Default → Primary*
@@ -285,6 +333,10 @@ declare module "@prismicio/client" {
       PageDocumentData,
       PageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      CustomNecklaceSlice,
+      CustomNecklaceSliceDefaultPrimary,
+      CustomNecklaceSliceVariation,
+      CustomNecklaceSliceDefault,
       CustomRingSlice,
       CustomRingSliceDefaultPrimary,
       CustomRingSliceVariation,
