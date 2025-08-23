@@ -14,7 +14,7 @@ type FloatingRingProps = {
   children?: ReactNode;
 } & JSX.IntrinsicElements["group"];
 
-useGLTF.preload("/Models/rings/source/RING.glb");
+useGLTF.preload("/Models/rings/RING.glb");
 
 const FloatingRing = forwardRef<Group, FloatingRingProps>(
   (

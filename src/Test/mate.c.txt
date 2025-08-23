@@ -12,7 +12,7 @@ export default function CustomRingModel({
   scale = 1.2,
   materialType = "gold",
 }: CustomRingModelProps) {
-  const { scene } = useGLTF("/Models/rings/source/RING_custom.glb");
+  const { scene } = useGLTF("/Models/rings/RING_custom.glb");
   const material = useRingMaterial({ type: materialType });
 
   console.log(scene);

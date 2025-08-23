@@ -14,7 +14,7 @@ type FloatingNecklaceProps = {
   children?: ReactNode;
 } & JSX.IntrinsicElements["group"];
 
-useGLTF.preload("/Models/necklace/source/crossNecklace.glb");
+useGLTF.preload("/Models/necklace/crossNecklace.glb");
 
 const FloatingNecklace = forwardRef<Group, FloatingNecklaceProps>(
   (

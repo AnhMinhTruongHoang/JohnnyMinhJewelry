@@ -3,24 +3,29 @@ import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 import useRingMaterial from "./Material";
 
-useGLTF.preload("/Models/rings/source/RING_custom.glb");
+useGLTF.preload("/Models/rings/RING_custom.glb");
 
 type CustomRingModelProps = {
   scale?: number;
-  materialMapping?: Record<string, "gold" | "silver" | "ceramic" | "diamond">;
+  materialMapping?: Record<
+    string,
+    "gold" | "silver" | "ceramic" | "diamond" | "wood" | "metal"
+  >;
 };
 
 export default function CustomRingModel({
   scale = 1,
   materialMapping = {},
 }: CustomRingModelProps) {
-  const { scene } = useGLTF("/Models/rings/source/RING_custom.glb");
+  const { scene } = useGLTF("/Models/rings/RING_custom.glb");
 
   // Materials
   const goldMat = useRingMaterial({ type: "gold" });
   const silverMat = useRingMaterial({ type: "silver" });
   const ceramicMat = useRingMaterial({ type: "ceramic" });
   const diamondMat = useRingMaterial({ type: "diamond" });
+  const woodMat = useRingMaterial({ type: "wood" });
+  const metalMat = useRingMaterial({ type: "metal" });
 
   const materialCache = useMemo(
     () => ({
@@ -28,8 +33,10 @@ export default function CustomRingModel({
       silver: silverMat,
       ceramic: ceramicMat,
       diamond: diamondMat,
+      wood: woodMat,
+      metal: metalMat,
     }),
-    [goldMat, silverMat, ceramicMat, diamondMat],
+    [goldMat, silverMat, ceramicMat, diamondMat, woodMat, metalMat],
   );
 
   useEffect(() => {

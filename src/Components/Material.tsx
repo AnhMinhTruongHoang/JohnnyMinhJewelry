@@ -7,7 +7,13 @@ import {
 import { useLoader } from "@react-three/fiber";
 import { useMemo, useEffect } from "react";
 
-type MaterialType = "gold" | "silver" | "ceramic" | "diamond";
+type MaterialType =
+  | "gold"
+  | "silver"
+  | "ceramic"
+  | "diamond"
+  | "wood"
+  | "metal";
 
 type MaterialProps = {
   type?: MaterialType;
@@ -18,43 +24,47 @@ const TEXTURE_PATHS: Record<
   { base: string; normal: string; roughness: string; metalness: string }
 > = {
   gold: {
-    base: "/Models/rings/textures/gold/Poliigon_MetalGoldPaint_7253_BaseColor.jpg",
-    normal:
-      "/Models/rings/textures/gold/Poliigon_MetalGoldPaint_7253_Normal.png",
-    roughness:
-      "/Models/rings/textures/gold/Poliigon_MetalGoldPaint_7253_Roughness.jpg",
-    metalness:
-      "/Models/rings/textures/gold/Poliigon_MetalGoldPaint_7253_Metallic.jpg",
+    base: "/textures/gold/Poliigon_MetalGoldPaint_7253_BaseColor.jpg",
+    normal: "/textures/gold/Poliigon_MetalGoldPaint_7253_Normal.png",
+    roughness: "/textures/gold/Poliigon_MetalGoldPaint_7253_Roughness.jpg",
+    metalness: "/textures/gold/Poliigon_MetalGoldPaint_7253_Metallic.jpg",
   },
   silver: {
-    base: "/Models/rings/textures/silver/Poliigon_MetalSteelBrushed_7174_BaseColor.jpg",
-    normal:
-      "/Models/rings/textures/silver/Poliigon_MetalSteelBrushed_7174_Normal.png",
-    roughness:
-      "/Models/rings/textures/silver/Poliigon_MetalSteelBrushed_7174_Roughness.jpg",
-    metalness:
-      "/Models/rings/textures/silver/Poliigon_MetalSteelBrushed_7174_Metallic.jpg",
+    base: "/textures/silver/Metal049C_1K-PNG_Color.png",
+    normal: "/textures/silver/Metal049C_1K-PNG_NormalDX.png",
+    roughness: "/textures/silver/Metal049C_1K-PNG_Roughness.png",
+    metalness: "/textures/silver/Metal049C_1K-PNG_Metalness.png",
   },
   ceramic: {
-    base: "/Models/rings/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_BaseColor.jpg",
-    normal:
-      "/Models/rings/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Normal.png",
+    base: "/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_BaseColor.jpg",
+    normal: "/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Normal.png",
     roughness:
-      "/Models/rings/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Roughness.jpg",
-    metalness:
-      "/Models/rings/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Metallic.jpg",
+      "/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Roughness.jpg",
+    metalness: "/textures/ceramic/Poliigon_ClayCeramicGlossy_5212_Metallic.jpg",
   },
   diamond: {
-    base: "/Models/rings/textures/diamond/Image_0_2@channels=G.jpeg",
-    normal: "/Models/rings/textures/diamond/Image_1_0.jpeg",
-    roughness: "/Models/rings/textures/diamond/Image_1_1.png",
-    metalness: "/Models/rings/textures/diamond/Image_1_1.png",
+    base: "/textures/diamond/Image_0_2@channels=G.jpeg",
+    normal: "/textures/diamond/Image_1_0.jpeg",
+    roughness: "/textures/diamond/Image_1_1.png",
+    metalness: "/textures/diamond/Image_1_1.png",
+  },
+  wood: {
+    base: "/textures/wood/Wood066_1K-PNG_Color.png",
+    normal: "/textures/wood/Wood066_1K-PNG_NormalDX.png",
+    roughness: "/textures/wood/Wood066_1K-PNG_Roughness.png",
+    metalness: "/textures/wood/Wood066_1K-PNG_Displacement.png",
+  },
+  metal: {
+    base: "/textures/metal/Poliigon_MetalSteelBrushed_7174_BaseColor.jpg",
+    normal: "/textures/metal/Poliigon_MetalSteelBrushed_7174_Normal.png",
+    roughness: "/textures/metal/Poliigon_MetalSteelBrushed_7174_Roughness.jpg",
+    metalness: "/textures/metal/Poliigon_MetalSteelBrushed_7174_Metallic.jpg",
   },
 };
 
 export default function useRingMaterial({ type = "gold" }: MaterialProps) {
   const safeType: MaterialType = (
-    ["gold", "silver", "ceramic", "diamond"] as const
+    ["gold", "silver", "ceramic", "diamond", "wood", "metal"] as const
   ).includes(type as MaterialType)
     ? (type as MaterialType)
     : "silver";

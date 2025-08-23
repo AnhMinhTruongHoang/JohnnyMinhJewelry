@@ -9,9 +9,9 @@ export default function CrossNecklaceModel({
   scale = 1,
   ...props
 }: NecklaceModelProps) {
-  const { scene } = useGLTF("/Models/necklace/source/crossNecklace.glb");
+  const { scene } = useGLTF("/Models/necklace/crossNecklace.glb");
 
   return <primitive object={scene} scale={scale} {...props} />;
 }
 
-useGLTF.preload("/Models/necklace/source/crossNecklace.glb");
+useGLTF.preload("/Models/necklace/crossNecklace.glb");

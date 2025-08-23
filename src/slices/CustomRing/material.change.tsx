@@ -12,17 +12,19 @@ type Props = {
   parts: RingPart[]; // danh sách các mesh name
   onChange: (
     partName: string,
-    material: "gold" | "silver" | "ceramic" | "diamond",
+    material: "gold" | "silver" | "ceramic" | "diamond" | "wood" | "metal",
   ) => void;
 };
 
 const RingMaterialSelector: FC<Props> = ({ parts, onChange }) => {
-  const materials: ("gold" | "silver" | "ceramic" | "diamond")[] = [
-    "gold",
-    "silver",
-    "ceramic",
-    "diamond",
-  ];
+  const materials: (
+    | "gold"
+    | "silver"
+    | "ceramic"
+    | "diamond"
+    | "wood"
+    | "metal"
+  )[] = ["gold", "silver", "ceramic", "diamond", "wood", "metal"];
 
   // state lưu material hiện tại của từng part
   const [partMaterials, setPartMaterials] = useState<Record<string, number>>(
