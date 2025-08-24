@@ -46,12 +46,14 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative flex min-h-screen flex-col items-center justify-center bg-gray-400"
+      className="relative flex min-h-screen flex-col items-center justify-center bg-neutral-900 text-white"
     >
       {/* Heading */}
       <hr />
-      <div className="text-center font-serif text-6xl">
-        <PrismicRichText field={slice.primary.heading} />
+      <div className="mt-36 text-center font-serif text-6xl">
+        <i>
+          <PrismicRichText field={slice.primary.heading} />
+        </i>
       </div>
 
       {/* Model nhẫn */}
@@ -76,12 +78,12 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
         <NecklaceMaterialSelector
           parts={[
             { name: "Band", label: "Band" },
+            { name: "Ribbon", label: "Ribbon" },
             { name: "topGrid", label: "Top Grid" },
             { name: "bottomGrid", label: "Bottom Grid" },
             { name: "cross", label: "Cross" },
             { name: "wire", label: "Wire" },
             { name: "chain", label: "Chain" },
-            { name: "Ribbon", label: "Ribbon" },
           ]}
           onChange={(partName, material) => {
             if (partName === "Band") {
