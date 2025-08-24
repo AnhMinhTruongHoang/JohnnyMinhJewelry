@@ -8,42 +8,50 @@ type NecklacePart = {
   label: string;
 };
 
+type Material =
+  | "gold"
+  | "silver"
+  | "ceramic"
+  | "diamond"
+  | "wood"
+  | "metal"
+  | "cotton"
+  | "linen"
+  | "silk";
+
 type Props = {
-  parts: NecklacePart[]; // danh sách các mesh name
-  onChange: (
-    partName: string,
-    material:
-      | "gold"
-      | "silver"
-      | "ceramic"
-      | "diamond"
-      | "wood"
-      | "metal"
-      | "cotton"
-      | "linen"
-      | "silk",
-  ) => void;
+  parts: NecklacePart[];
+  onChange: (partName: string, material: Material) => void;
 };
 
 const NecklaceMaterialSelector: FC<Props> = ({ parts, onChange }) => {
-  const materials: (
-    | "gold"
-    | "silver"
-    | "ceramic"
-    | "diamond"
-    | "wood"
-    | "metal"
-  )[] = ["gold", "silver", "ceramic", "diamond", "wood", "metal"];
+  const allMaterials: Material[] = [
+    "gold",
+    "silver",
+    "ceramic",
+    "diamond",
+    "wood",
+    "metal",
+    "cotton",
+    "linen",
+    "silk",
+  ];
 
-  // state lưu material hiện tại của từng part
   const [partMaterials, setPartMaterials] = useState<Record<string, number>>(
-    () =>
-      Object.fromEntries(
-        parts.map((p) => [p.name, 0]), // mặc định chọn gold
-      ),
+    () => Object.fromEntries(parts.map((p) => [p.name, 0])),
   );
 
+  const getMaterialsForPart = (partName: string) => {
+    if (partName === "cross") {
+      return allMaterials.filter(
+        (m) => !["cotton", "linen", "silk"].includes(m),
+      );
+    }
+    return allMaterials;
+  };
+
   const handleChange = (partName: string, direction: "prev" | "next") => {
+    const materials = getMaterialsForPart(partName);
     const currentIndex = partMaterials[partName] ?? 0;
     const newIndex =
       direction === "prev"
@@ -70,7 +78,8 @@ const NecklaceMaterialSelector: FC<Props> = ({ parts, onChange }) => {
         </thead>
         <tbody>
           {parts.map((part) => {
-            const currentIndex = partMaterials[part.name];
+            const materials = getMaterialsForPart(part.name);
+            const currentIndex = partMaterials[part.name] ?? 0;
             return (
               <tr key={part.name}>
                 <td className="border px-4 py-2">{part.label}</td>

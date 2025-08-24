@@ -2,6 +2,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 import useMaterial from "./Material.Hard";
+import useSoftMaterial from "./Material.Soft";
 
 useGLTF.preload("/Models/necklace/Necklace01.glb");
 
@@ -9,7 +10,15 @@ type CustomNecklaceModelProps = {
   scale?: number;
   materialMapping?: Record<
     string,
-    "gold" | "silver" | "ceramic" | "diamond" | "wood" | "metal"
+    | "gold"
+    | "silver"
+    | "ceramic"
+    | "diamond"
+    | "wood"
+    | "metal"
+    | "cotton"
+    | "linen"
+    | "silk"
   >;
 };
 
@@ -26,6 +35,10 @@ export default function CustomNecklaceModel({
   const diamondMat = useMaterial({ type: "diamond" });
   const woodMat = useMaterial({ type: "wood" });
   const metalMat = useMaterial({ type: "metal" });
+  ///soft Material
+  const linenMat = useSoftMaterial({ type: "linen" });
+  const cottonMat = useSoftMaterial({ type: "cotton" });
+  const silkMat = useSoftMaterial({ type: "silk" });
 
   const materialCache = useMemo(
     () => ({
@@ -35,8 +48,21 @@ export default function CustomNecklaceModel({
       diamond: diamondMat,
       wood: woodMat,
       metal: metalMat,
+      linen: linenMat,
+      cotton: cottonMat,
+      silk: silkMat,
     }),
-    [goldMat, silverMat, ceramicMat, diamondMat, woodMat, metalMat],
+    [
+      goldMat,
+      silverMat,
+      ceramicMat,
+      diamondMat,
+      woodMat,
+      metalMat,
+      linenMat,
+      cottonMat,
+      silkMat,
+    ],
   );
 
   useEffect(() => {
@@ -65,7 +91,7 @@ export default function CustomNecklaceModel({
   //     }
   //   });
 
-  //   console.log("📦 Meshes in scene:");
+  //   console.log("Meshes in scene:");
   //   meshNames.forEach((name, index) => {
   //     console.log(`  ${index + 1}. ${name}`);
   //   });

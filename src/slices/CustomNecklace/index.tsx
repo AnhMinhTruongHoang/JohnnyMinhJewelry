@@ -28,18 +28,26 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
   ];
   /////
   const [materialMapping, setMaterialMapping] = useState<
-    Record<string, "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood">
+    Record<
+      string,
+      | "gold"
+      | "silver"
+      | "ceramic"
+      | "diamond"
+      | "metal"
+      | "wood"
+      | "cotton"
+      | "linen"
+      | "silk"
+    >
   >({
     cross: "diamond",
     wire: "silver",
     chain: "silver",
-    Ribbon: "diamond",
-    dobj001: "diamond",
-    dobj003: "diamond",
-    Prong001: "ceramic",
-    topGrid: "diamond",
-    bottomGrid: "ceramic",
-    ...Object.fromEntries(Band.map((name) => [name, "ceramic"])),
+    Ribbon: "silk",
+    topGrid: "silver",
+    bottomGrid: "silver",
+    ...Object.fromEntries(Band.map((name) => [name, "silk"])),
   });
 
   return (
