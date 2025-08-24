@@ -1,7 +1,7 @@
 "use client";
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
-import useRingMaterial from "./Material";
+import useMaterial from "./Material";
 
 useGLTF.preload("/Models/rings/RING_custom.glb");
 
@@ -20,12 +20,12 @@ export default function CustomRingModel({
   const { scene } = useGLTF("/Models/rings/RING_custom.glb");
 
   // Materials
-  const goldMat = useRingMaterial({ type: "gold" });
-  const silverMat = useRingMaterial({ type: "silver" });
-  const ceramicMat = useRingMaterial({ type: "ceramic" });
-  const diamondMat = useRingMaterial({ type: "diamond" });
-  const woodMat = useRingMaterial({ type: "wood" });
-  const metalMat = useRingMaterial({ type: "metal" });
+  const goldMat = useMaterial({ type: "gold" });
+  const silverMat = useMaterial({ type: "silver" });
+  const ceramicMat = useMaterial({ type: "ceramic" });
+  const diamondMat = useMaterial({ type: "diamond" });
+  const woodMat = useMaterial({ type: "wood" });
+  const metalMat = useMaterial({ type: "metal" });
 
   const materialCache = useMemo(
     () => ({
@@ -44,6 +44,12 @@ export default function CustomRingModel({
 
     scene.traverse((child: any) => {
       if (child.isMesh) {
+        // console.log(
+        //   " ring Mesh name:",
+        //   child.name,
+        //   "| Material name:",
+        //   child.material?.name,
+        // );
         const matType = materialMapping[child.name];
         if (matType) {
           child.material = materialCache[matType];

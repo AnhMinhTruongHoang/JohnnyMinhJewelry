@@ -1,7 +1,7 @@
 "use client";
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
-import useRingMaterial from "./Material";
+import useMaterial from "./Material";
 
 useGLTF.preload("/Models/necklace/Necklace01.glb");
 
@@ -20,12 +20,12 @@ export default function CustomNecklaceModel({
   const { scene } = useGLTF("/Models/necklace/Necklace01.glb");
 
   // Materials
-  const goldMat = useRingMaterial({ type: "gold" });
-  const silverMat = useRingMaterial({ type: "silver" });
-  const ceramicMat = useRingMaterial({ type: "ceramic" });
-  const diamondMat = useRingMaterial({ type: "diamond" });
-  const woodMat = useRingMaterial({ type: "wood" });
-  const metalMat = useRingMaterial({ type: "metal" });
+  const goldMat = useMaterial({ type: "gold" });
+  const silverMat = useMaterial({ type: "silver" });
+  const ceramicMat = useMaterial({ type: "ceramic" });
+  const diamondMat = useMaterial({ type: "diamond" });
+  const woodMat = useMaterial({ type: "wood" });
+  const metalMat = useMaterial({ type: "metal" });
 
   const materialCache = useMemo(
     () => ({
@@ -51,6 +51,27 @@ export default function CustomNecklaceModel({
       }
     });
   }, [scene, materialMapping, materialCache]);
+
+  /// check mesh
+
+  // useMemo(() => {
+  //   if (!scene) return;
+
+  //   const meshNames: string[] = [];
+
+  //   scene.traverse((child: any) => {
+  //     if (child.isMesh) {
+  //       meshNames.push(child.name);
+  //     }
+  //   });
+
+  //   console.log("📦 Meshes in scene:");
+  //   meshNames.forEach((name, index) => {
+  //     console.log(`  ${index + 1}. ${name}`);
+  //   });
+  // }, [scene]);
+
+  ///
 
   return (
     <group scale={scale}>
