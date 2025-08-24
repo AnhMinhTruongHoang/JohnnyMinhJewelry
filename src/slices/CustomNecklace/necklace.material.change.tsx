@@ -3,16 +3,25 @@
 import { FC, useState } from "react";
 import { Button } from "@/ui/button";
 
-type RingPart = {
+type NecklacePart = {
   name: string;
   label: string;
 };
 
 type Props = {
-  parts: RingPart[]; // danh sách các mesh name
+  parts: NecklacePart[]; // danh sách các mesh name
   onChange: (
     partName: string,
-    material: "gold" | "silver" | "ceramic" | "diamond" | "wood" | "metal",
+    material:
+      | "gold"
+      | "silver"
+      | "ceramic"
+      | "diamond"
+      | "wood"
+      | "metal"
+      | "cotton"
+      | "linen"
+      | "silk",
   ) => void;
 };
 
