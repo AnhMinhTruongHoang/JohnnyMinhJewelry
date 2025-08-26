@@ -65,8 +65,8 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
       </div>
 
       {/* Model nhẫn */}
-      <div className="flex h-[500px] w-full items-center justify-center">
-        <Canvas camera={{ fov: 30 }}>
+      <div className="flex h-[500px] w-[500px] items-center justify-center">
+        <Canvas camera={{ fov: 25 }}>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>

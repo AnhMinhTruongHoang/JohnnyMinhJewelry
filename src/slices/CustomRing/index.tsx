@@ -40,8 +40,8 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       </div>
 
       {/* Model nhẫn */}
-      <div className="flex h-[500px] w-full items-center justify-center">
-        <Canvas camera={{ position: [1, 1, 0], fov: 45 }}>
+      <div className="flex h-[500px] w-[500px] items-center justify-center">
+        <Canvas camera={{ position: [1, 1, 0], fov: 35 }}>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
