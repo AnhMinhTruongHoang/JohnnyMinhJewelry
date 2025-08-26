@@ -5,5 +5,6 @@ import dynamic from "next/dynamic";
 export const components = {
   custom_necklace: dynamic(() => import("./CustomNecklace")),
   custom_ring: dynamic(() => import("./CustomRing")),
+  earrings: dynamic(() => import("./Earrings")),
   hero: dynamic(() => import("./Hero")),
 };

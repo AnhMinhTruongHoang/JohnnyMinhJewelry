@@ -70,6 +70,7 @@ type ContentRelationshipFieldWithData<
 }[Exclude<TCustomType[number], string>["id"]];
 
 type PageDocumentDataSlicesSlice =
+  | EarringsSlice
   | CustomNecklaceSlice
   | CustomRingSlice
   | HeroSlice;
@@ -237,6 +238,51 @@ export type CustomRingSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *Earrings → Default → Primary*
+ */
+export interface EarringsSliceDefaultPrimary {
+  /**
+   * Heading field in *Earrings → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: earrings.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+}
+
+/**
+ * Default variation for Earrings Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EarringsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<EarringsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Earrings*
+ */
+type EarringsSliceVariation = EarringsSliceDefault;
+
+/**
+ * Earrings Shared Slice
+ *
+ * - **API ID**: `earrings`
+ * - **Description**: Earrings
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EarringsSlice = prismic.SharedSlice<
+  "earrings",
+  EarringsSliceVariation
+>;
+
+/**
  * Primary content in *Hero → Default → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -341,6 +387,10 @@ declare module "@prismicio/client" {
       CustomRingSliceDefaultPrimary,
       CustomRingSliceVariation,
       CustomRingSliceDefault,
+      EarringsSlice,
+      EarringsSliceDefaultPrimary,
+      EarringsSliceVariation,
+      EarringsSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,

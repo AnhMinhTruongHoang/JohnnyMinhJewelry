@@ -40,8 +40,8 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       </div>
 
       {/* Model nhẫn */}
-      <div className="flex h-[500px] w-[500px] items-center justify-center">
-        <Canvas camera={{ position: [1, 1, 0], fov: 35 }}>
+      <div className="flex h-[300px] w-[600px] items-center justify-center">
+        <Canvas camera={{ position: [1, 1, 0], fov: 40 }}>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
@@ -57,7 +57,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       </div>
 
       {/* Material selector */}
-      <div className="mb-16 mt-5">
+      <div className="mb-10 mt-6">
         <MaterialSelector
           parts={[
             { name: "Circle006", label: "Circle" },
