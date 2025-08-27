@@ -70,6 +70,7 @@ export default function CustomNecklaceModel({
 
     scene.traverse((child: any) => {
       if (child.isMesh) {
+        // console.log("Mesh:", child.name);
         const matType = materialMapping[child.name];
         if (matType) {
           child.material = materialCache[matType];
@@ -77,27 +78,6 @@ export default function CustomNecklaceModel({
       }
     });
   }, [scene, materialMapping, materialCache]);
-
-  /// check mesh
-
-  // useMemo(() => {
-  //   if (!scene) return;
-
-  //   const meshNames: string[] = [];
-
-  //   scene.traverse((child: any) => {
-  //     if (child.isMesh) {
-  //       meshNames.push(child.name);
-  //     }
-  //   });
-
-  //   console.log("Meshes in scene:");
-  //   meshNames.forEach((name, index) => {
-  //     console.log(`  ${index + 1}. ${name}`);
-  //   });
-  // }, [scene]);
-
-  ///
 
   return (
     <group scale={scale}>

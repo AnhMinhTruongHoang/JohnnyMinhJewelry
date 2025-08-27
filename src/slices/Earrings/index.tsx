@@ -17,9 +17,9 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
   const [materialMapping, setMaterialMapping] = useState<
     Record<string, "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood">
   >({
-    Diamond: "diamond",
-    DiamondSmall: "diamond",
-    Holders: "gold",
+    diamond: "diamond",
+    diamondSmall: "diamond",
+    holders: "gold",
   });
 
   ///
@@ -27,7 +27,7 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100"
+      className="relative flex min-h-screen flex-col items-center justify-center bg-purple-300"
     >
       {/* Heading */}
       <div className="mt-16 text-center font-serif text-6xl">
@@ -38,11 +38,15 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
 
       {/* Model nhẫn */}
       <div className="flex h-[600px] w-[600px] items-center justify-center">
-        <Canvas camera={{ position: [1, 1, 0], fov: 40 }}>
-          <ambientLight intensity={0.5} />
+        <Canvas camera={{ position: [0, 0, 10], fov: 25 }}>
+          <ambientLight intensity={1} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
-            <CustomEarringsModel scale={3} materialMapping={materialMapping} />
+            <CustomEarringsModel
+              scale={0.5}
+              materialMapping={materialMapping}
+              rotation={[0, Math.PI / 4, 0]} // X, Y, Z
+            />
           </Suspense>
           <OrbitControls />
           <Environment
@@ -57,9 +61,9 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
       <div className="mb-10 mt-6">
         <EarringMaterialSelector
           parts={[
-            { name: "Diamond", label: "Diamond" },
-            { name: "DiamondSmall", label: "Small Diamond" },
-            { name: "Holders", label: "Holders" },
+            { name: "diamond", label: "Diamond" },
+            { name: "diamondSmall", label: "Small Diamond" },
+            { name: "holders", label: "Holders" },
           ]}
           onChange={(partName, material) => {
             setMaterialMapping((prev) => ({
