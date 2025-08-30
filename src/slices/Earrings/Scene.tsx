@@ -27,7 +27,14 @@ export default function SceneCustomEarrings({
 
   return (
     <group ref={ringRef} position={position} rotation={rotation} scale={scale}>
-      <CustomEarringsModel scale={6} />
+      <CustomEarringsModel
+        scale={6}
+        materialMapping={{
+          hook: "gold",
+          gem: "diamond",
+          ring: "silver",
+        }}
+      />
     </group>
   );
 }

@@ -3,13 +3,18 @@ import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 
+type MaterialType =
+  | "gold"
+  | "silver"
+  | "ceramic"
+  | "diamond"
+  | "metal"
+  | "wood";
+
 type Props = {
   scale?: number;
   rotation?: [number, number, number];
-  materialMapping: Record<
-    string,
-    "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood"
-  >;
+  materialMapping: Record<string, MaterialType>;
 };
 
 const partToMeshes: Record<string, string[]> = {
@@ -25,14 +30,14 @@ const partToMeshes: Record<string, string[]> = {
   pillow: ["pillow"],
 };
 
-const CustomEarringsModel = ({
+export default function CustomEarringsModel({
   scale = 1,
   rotation = [0, 0, 0],
   materialMapping,
-}: Props) => {
+}: Props) {
   const { scene } = useGLTF("/Models/earrings/Earrings001.glb");
 
-  // tạo materials 1 lần
+  // Tạo materials 1 lần
   const materials = useMemo(
     () => ({
       gold: new THREE.MeshStandardMaterial({
@@ -70,7 +75,18 @@ const CustomEarringsModel = ({
     [],
   );
 
+  // Áp dụng material
   useEffect(() => {
+    if (!scene) return;
+
+    // Lưu material gốc vào userData của mesh
+    scene.traverse((child: any) => {
+      if (child.isMesh && !child.userData.originalMaterial) {
+        child.userData.originalMaterial = child.material;
+      }
+    });
+
+    // Áp dụng material mới nếu có mapping
     scene.traverse((child: any) => {
       if (child.isMesh) {
         for (const [partName, meshNames] of Object.entries(partToMeshes)) {
@@ -78,6 +94,8 @@ const CustomEarringsModel = ({
             const matKey = materialMapping[partName];
             if (matKey && materials[matKey]) {
               child.material = materials[matKey];
+            } else {
+              child.material = child.userData.originalMaterial;
             }
           }
         }
@@ -86,6 +104,4 @@ const CustomEarringsModel = ({
   }, [materialMapping, scene, materials]);
 
   return <primitive object={scene} scale={scale} rotation={rotation} />;
-};
-
-export default CustomEarringsModel;
+}
