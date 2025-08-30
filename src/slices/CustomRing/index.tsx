@@ -67,6 +67,8 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
             { name: "Circle", label: "Mini stone" },
             { name: "Prong001", label: "Stone prong" },
             { name: "dobj003", label: "Hearth" },
+            { name: "dobj003", label: "Hearth" },
+            { name: "Text", label: "Text" },
           ]}
           onChange={(partName, material) => {
             setMaterialMapping((prev) => ({
