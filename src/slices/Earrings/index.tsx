@@ -37,7 +37,7 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
       </div>
 
       {/* Model nhẫn */}
-      <div className="flex h-[600px] w-[600px] items-center justify-center">
+      <div className="flex h-[600px] w-[600px] mt-16 items-center justify-center">
         <Canvas camera={{ position: [0, 0, 10], fov: 25 }}>
           <ambientLight intensity={1} />
           <directionalLight position={[5, 5, 5]} />

@@ -7,6 +7,7 @@ useGLTF.preload("/Models/rings/RING_custom.glb");
 
 type CustomRingModelProps = {
   scale?: number;
+  engravingText?: string;
   materialMapping?: Record<
     string,
     "gold" | "silver" | "ceramic" | "diamond" | "wood" | "metal"
