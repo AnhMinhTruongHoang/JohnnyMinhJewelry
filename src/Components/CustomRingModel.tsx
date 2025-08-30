@@ -45,12 +45,12 @@ export default function CustomRingModel({
 
     scene.traverse((child: any) => {
       if (child.isMesh) {
-        // console.log(
-        //   " ring Mesh name:",
-        //   child.name,
-        //   "| Material name:",
-        //   child.material?.name,
-        // );
+        console.log(
+          " ring Mesh name:",
+          child.name,
+          "| Material name:",
+          child.material?.name,
+        );
         const matType = materialMapping[child.name];
         if (matType) {
           child.material = materialCache[matType];
