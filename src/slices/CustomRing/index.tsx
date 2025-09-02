@@ -13,7 +13,7 @@ import { Environment, OrbitControls, useTexture } from "@react-three/drei";
 export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
-  const [engravingText, setEngravingText] = useState("name");
+  const [engravingText, setEngravingText] = useState("");
   const [materialMapping, setMaterialMapping] = useState<
     Record<string, "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood">
   >({
@@ -69,7 +69,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
         type="text"
         value={engravingText}
         onChange={(e) => setEngravingText(e.target.value)}
-        maxLength={15}
+        maxLength={8}
         className="mb-4 rounded border p-2"
       />
 
@@ -86,8 +86,6 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
             { name: "Circle", label: "Mini stone" },
             { name: "Prong001", label: "Stone prong" },
             { name: "dobj003", label: "Hearth" },
-            { name: "dobj003", label: "Hearth" },
-            { name: "Text", label: "Text" },
           ]}
           onChange={(partName, material) => {
             setMaterialMapping((prev) => ({

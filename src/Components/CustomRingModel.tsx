@@ -1,9 +1,9 @@
 "use client";
 import { Decal, useGLTF } from "@react-three/drei";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useMaterial from "./Material.Hard";
 import * as THREE from "three";
-import { degToRad } from "three/src/math/MathUtils.js";
+import { useControls } from "leva";
 
 useGLTF.preload("/Models/rings/ringb.glb");
 
@@ -23,6 +23,12 @@ export default function CustomRingModel({
 }: CustomRingModelProps) {
   const { scene } = useGLTF("/Models/rings/ringb.glb");
   const targetRef = useRef<THREE.Mesh>(null!);
+  /// control
+  const { rotX, rotY, rotZ } = useControls("Decal Rotation", {
+    rotX: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
+    rotY: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
+    rotZ: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
+  });
 
   // --- tạo texture từ canvas ---
   const textTexture = useMemo(() => {
@@ -32,10 +38,21 @@ export default function CustomRingModel({
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "green"; // màu chữ
-    ctx.font = "60px Arial";
+    ctx.fillStyle = "green";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+
+    // Tự động co chữ vừa khung decal
+    let fontSize = 80; // bắt đầu font to
+    ctx.font = `${fontSize}px Arial`;
+    while (
+      ctx.measureText(engravingText).width > canvas.width * 0.8 &&
+      fontSize > 20
+    ) {
+      fontSize -= 2;
+      ctx.font = `${fontSize}px Arial`;
+    }
+
     ctx.fillText(engravingText, canvas.width / 2, canvas.height / 2);
 
     const texture = new THREE.CanvasTexture(canvas);
@@ -89,9 +106,9 @@ export default function CustomRingModel({
         <Decal
           debug
           mesh={targetRef}
-          position={[0, 0.0, 0]}
-          rotation={[0, 0, degToRad(1)]}
-          scale={[0.15, 0.05, 0.15]}
+          position={[0, 0, 0]}
+          rotation={[0, -1.6, 0]} // cố định luôn center ở đây
+          scale={[0.25, 0.1, 0.15]} // không đổi nữa
         >
           <meshBasicMaterial
             map={textTexture}
