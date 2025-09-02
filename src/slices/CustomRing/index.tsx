@@ -61,17 +61,19 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
         </Canvas>
       </div>
       {/* Input text*/}
-      <label htmlFor="engraving-text" className="mb-2 block font-medium">
-        Engraving Text
-      </label>
-      <input
-        id="engraving-text"
-        type="text"
-        value={engravingText}
-        onChange={(e) => setEngravingText(e.target.value)}
-        maxLength={6}
-        className="mb-4 rounded border p-2"
-      />
+      <div className="items-center text-center">
+        <label htmlFor="engraving-text" className="mb-2 block font-medium">
+          <i> Signature</i>
+        </label>
+        <input
+          id="engraving-text"
+          type="text"
+          value={engravingText}
+          onChange={(e) => setEngravingText(e.target.value)}
+          maxLength={6}
+          className="mb-4 rounded border p-2 text-center"
+        />
+      </div>
 
       {/* Input text */}
 

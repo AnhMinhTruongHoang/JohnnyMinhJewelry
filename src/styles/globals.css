@@ -1,0 +1,10 @@
+@font-face {
+  font-family: "Alpino";
+  src: url("/fonts/Alpino-Variable.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --font-alpino: "Alpino", sans-serif;
+}

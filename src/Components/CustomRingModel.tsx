@@ -37,14 +37,14 @@ export default function CustomRingModel({
 
     // Tự động co chữ vừa khung decal
     let fontSize = 90;
-    ctx.font = `italic ${fontSize}px 'Notera Personal Use'`;
+    ctx.font = `italic ${fontSize}px 'Alpino'`;
 
     while (
       ctx.measureText(engravingText).width > canvas.width * 0.8 &&
       fontSize > 20
     ) {
       fontSize -= 2;
-      ctx.font = `italic ${fontSize}px Bacana`;
+      ctx.font = `italic ${fontSize}px "Brush Script MT", cursive`;
     }
 
     ctx.fillText(engravingText, canvas.width / 2, canvas.height / 2);
