@@ -27,24 +27,24 @@ export default function CustomRingModel({
   // --- tạo texture từ canvas ---
   const textTexture = useMemo(() => {
     const canvas = document.createElement("canvas");
-    canvas.width = 512;
-    canvas.height = 256;
+    canvas.width = 700;
+    canvas.height = 300;
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "green";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     // Tự động co chữ vừa khung decal
     let fontSize = 90;
-    ctx.font = `${fontSize}px Arial`;
+    ctx.font = `italic ${fontSize}px 'Notera Personal Use'`;
+
     while (
       ctx.measureText(engravingText).width > canvas.width * 0.8 &&
       fontSize > 20
     ) {
       fontSize -= 2;
-      ctx.font = `${fontSize}px Arial`;
+      ctx.font = `italic ${fontSize}px Bacana`;
     }
 
     ctx.fillText(engravingText, canvas.width / 2, canvas.height / 2);
@@ -102,12 +102,15 @@ export default function CustomRingModel({
   return (
     <group scale={scale}>
       {/* Ring */}
-      <primitive object={scene} />
+      <primitive
+        object={scene}
+        onPointerOver={() => (document.body.style.cursor = "grab")}
+        onPointerOut={() => (document.body.style.cursor = "default")}
+      />
 
       {/* In chữ decal 2D */}
       {textTexture && targetRef.current && decalPos && (
         <Decal
-          debug
           mesh={targetRef}
           position={decalPos} // luôn ở tâm mesh
           rotation={[0, -1.6, 0]} // xoay decal nếu cần

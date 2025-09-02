@@ -69,7 +69,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
         type="text"
         value={engravingText}
         onChange={(e) => setEngravingText(e.target.value)}
-        maxLength={8}
+        maxLength={6}
         className="mb-4 rounded border p-2"
       />
 
