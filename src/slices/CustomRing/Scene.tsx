@@ -18,7 +18,6 @@ export default function SceneCustomRing({
   scale = 1,
 }: Props) {
   const ringRef = useRef<Group>(null);
-  const textTexture = useTexture("/images/text.jpg");
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();

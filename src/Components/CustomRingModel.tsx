@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import useMaterial from "./Material.Hard";
 import * as THREE from "three";
 
-useGLTF.preload("/Models/rings/ringb.glb");
+useGLTF.preload("/Models/rings/ringb2.glb");
 
 type CustomRingModelProps = {
   scale?: number;
@@ -20,7 +20,7 @@ export default function CustomRingModel({
   engravingText = "Text",
   materialMapping = {},
 }: CustomRingModelProps) {
-  const { scene } = useGLTF("/Models/rings/ringb.glb");
+  const { scene } = useGLTF("/Models/rings/ringb2.glb");
   const targetRef = useRef<THREE.Mesh>(null!);
   const [decalPos, setDecalPos] = useState<THREE.Vector3 | null>(null);
 
@@ -77,7 +77,6 @@ export default function CustomRingModel({
   // Tìm mesh target và tính tâm
   useEffect(() => {
     if (!scene) return;
-
     scene.traverse((child: any) => {
       if (child.isMesh) {
         const matType = materialMapping[child.name];
