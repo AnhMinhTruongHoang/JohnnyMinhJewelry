@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Group } from "three";
 import { useFrame } from "@react-three/fiber";
 import CustomRingModel from "@/Components/CustomRingModel";
+import { useTexture } from "@react-three/drei";
 
 type Props = {
   position?: [number, number, number];
@@ -17,6 +18,7 @@ export default function SceneCustomRing({
   scale = 1,
 }: Props) {
   const ringRef = useRef<Group>(null);
+  const textTexture = useTexture("/images/text.jpg");
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
