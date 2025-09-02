@@ -3,7 +3,6 @@ import { Decal, useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import useMaterial from "./Material.Hard";
 import * as THREE from "three";
-import { useControls } from "leva";
 
 useGLTF.preload("/Models/rings/ringb.glb");
 
@@ -23,12 +22,7 @@ export default function CustomRingModel({
 }: CustomRingModelProps) {
   const { scene } = useGLTF("/Models/rings/ringb.glb");
   const targetRef = useRef<THREE.Mesh>(null!);
-  /// control
-  const { rotX, rotY, rotZ } = useControls("Decal Rotation", {
-    rotX: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
-    rotY: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
-    rotZ: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
-  });
+  const [decalPos, setDecalPos] = useState<THREE.Vector3 | null>(null);
 
   // --- tạo texture từ canvas ---
   const textTexture = useMemo(() => {
@@ -43,7 +37,7 @@ export default function CustomRingModel({
     ctx.textBaseline = "middle";
 
     // Tự động co chữ vừa khung decal
-    let fontSize = 80; // bắt đầu font to
+    let fontSize = 90;
     ctx.font = `${fontSize}px Arial`;
     while (
       ctx.measureText(engravingText).width > canvas.width * 0.8 &&
@@ -80,6 +74,7 @@ export default function CustomRingModel({
     [goldMat, silverMat, ceramicMat, diamondMat, woodMat, metalMat],
   );
 
+  // Tìm mesh target và tính tâm
   useEffect(() => {
     if (!scene) return;
 
@@ -91,6 +86,14 @@ export default function CustomRingModel({
         }
         if (child.name === "Circle003_2") {
           targetRef.current = child;
+
+          // Tính tâm geometry
+          child.geometry.computeBoundingBox();
+          const center = new THREE.Vector3();
+          child.geometry.boundingBox.getCenter(center);
+
+          // Đưa tâm về local space của mesh
+          setDecalPos(center);
         }
       }
     });
@@ -102,13 +105,13 @@ export default function CustomRingModel({
       <primitive object={scene} />
 
       {/* In chữ decal 2D */}
-      {textTexture && targetRef.current && (
+      {textTexture && targetRef.current && decalPos && (
         <Decal
           debug
           mesh={targetRef}
-          position={[0, 0, 0]}
-          rotation={[0, -1.6, 0]} // cố định luôn center ở đây
-          scale={[0.25, 0.1, 0.15]} // không đổi nữa
+          position={decalPos} // luôn ở tâm mesh
+          rotation={[0, -1.6, 0]} // xoay decal nếu cần
+          scale={[0.25, 0.1, 0.15]} // cố định scale
         >
           <meshBasicMaterial
             map={textTexture}
