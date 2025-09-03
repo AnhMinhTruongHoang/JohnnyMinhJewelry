@@ -24,7 +24,7 @@ export default function CustomRingModel({
   const targetRef = useRef<THREE.Mesh>(null!);
   const [decalPos, setDecalPos] = useState<THREE.Vector3 | null>(null);
 
-  // --- tạo texture từ canvas ---
+  // --- tạo texture từ canvas với font Sign Rathi ---
   const textTexture = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = 700;
@@ -35,19 +35,30 @@ export default function CustomRingModel({
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
-    // Tự động co chữ vừa khung decal
     let fontSize = 90;
-    ctx.font = `italic ${fontSize}px 'Alpino'`;
 
-    while (
-      ctx.measureText(engravingText).width > canvas.width * 0.8 &&
-      fontSize > 20
-    ) {
-      fontSize -= 2;
-      ctx.font = `italic ${fontSize}px "Brush Script MT", cursive`;
-    }
+    const font = new FontFace(
+      "SignRathi",
+      "url(/fonts/FzSignRathi_Update.ttf)",
+    );
 
-    ctx.fillText(engravingText, canvas.width / 2, canvas.height / 2);
+    font.load().then((loadedFont) => {
+      document.fonts.add(loadedFont);
+
+      ctx.font = `italic ${fontSize}px 'SignRathi'`;
+
+      // Auto giảm size nếu chữ quá dài
+      while (
+        ctx.measureText(engravingText).width > canvas.width * 0.8 &&
+        fontSize > 20
+      ) {
+        fontSize -= 2;
+        ctx.font = `italic ${fontSize}px 'SignRathi'`;
+      }
+
+      ctx.fillStyle = "black";
+      ctx.fillText(engravingText, canvas.width / 2, canvas.height / 2);
+    });
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
@@ -91,7 +102,6 @@ export default function CustomRingModel({
           const center = new THREE.Vector3();
           child.geometry.boundingBox.getCenter(center);
 
-          // Đưa tâm về local space của mesh
           setDecalPos(center);
         }
       }
@@ -111,9 +121,9 @@ export default function CustomRingModel({
       {textTexture && targetRef.current && decalPos && (
         <Decal
           mesh={targetRef}
-          position={decalPos} // luôn ở tâm mesh
-          rotation={[0, -1.6, 0]} // xoay decal nếu cần
-          scale={[0.25, 0.1, 0.15]} // cố định scale
+          position={[decalPos.x, decalPos.y - 0.01, decalPos.z]}
+          rotation={[0, -1.6, 0]}
+          scale={[0.25, 0.1, 0.15]}
         >
           <meshBasicMaterial
             map={textTexture}
