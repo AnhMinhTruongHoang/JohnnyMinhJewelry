@@ -3,8 +3,6 @@ import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 
-useGLTF.preload("/Models/earrings/Earrings001.glb");
-
 type MaterialType =
   | "gold"
   | "silver"

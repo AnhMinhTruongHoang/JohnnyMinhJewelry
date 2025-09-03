@@ -23,12 +23,22 @@ export default function CustomRingModel({
   const { scene } = useGLTF("/Models/rings/ringb2.glb");
   const targetRef = useRef<THREE.Mesh>(null!);
   const [decalPos, setDecalPos] = useState<THREE.Vector3 | null>(null);
+  const [textTexture, setTextTexture] = useState<THREE.CanvasTexture | null>(
+    null,
+  );
 
   // --- tạo texture từ canvas với font Sign Rathi ---
-  const textTexture = useMemo(() => {
+
+  useEffect(() => {
     const canvas = document.createElement("canvas");
+    canvas.width = 700;
+    canvas.height = 300;
     const ctx = canvas.getContext("2d")!;
-    const texture = new THREE.CanvasTexture(canvas);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    let fontSize = 90;
 
     const font = new FontFace(
       "SignRathi",
@@ -37,13 +47,6 @@ export default function CustomRingModel({
     font.load().then((loadedFont) => {
       document.fonts.add(loadedFont);
 
-      canvas.width = 700;
-      canvas.height = 300;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      let fontSize = 90;
       ctx.font = `italic ${fontSize}px 'SignRathi'`;
 
       while (
@@ -56,10 +59,11 @@ export default function CustomRingModel({
 
       ctx.fillStyle = "black";
       ctx.fillText(engravingText, canvas.width / 2, canvas.height / 2);
-      texture.needsUpdate = true;
-    });
 
-    return texture;
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      setTextTexture(texture);
+    });
   }, [engravingText]);
 
   // Materials
