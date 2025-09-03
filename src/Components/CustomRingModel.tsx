@@ -27,27 +27,25 @@ export default function CustomRingModel({
   // --- tạo texture từ canvas với font Sign Rathi ---
   const textTexture = useMemo(() => {
     const canvas = document.createElement("canvas");
-    canvas.width = 700;
-    canvas.height = 300;
     const ctx = canvas.getContext("2d")!;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    let fontSize = 90;
+    const texture = new THREE.CanvasTexture(canvas);
 
     const font = new FontFace(
       "SignRathi",
       "url(/fonts/FzSignRathi_Update.ttf)",
     );
-
     font.load().then((loadedFont) => {
       document.fonts.add(loadedFont);
 
+      canvas.width = 700;
+      canvas.height = 300;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      let fontSize = 90;
       ctx.font = `italic ${fontSize}px 'SignRathi'`;
 
-      // Auto giảm size nếu chữ quá dài
       while (
         ctx.measureText(engravingText).width > canvas.width * 0.8 &&
         fontSize > 20
@@ -58,10 +56,9 @@ export default function CustomRingModel({
 
       ctx.fillStyle = "black";
       ctx.fillText(engravingText, canvas.width / 2, canvas.height / 2);
+      texture.needsUpdate = true;
     });
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
     return texture;
   }, [engravingText]);
 
