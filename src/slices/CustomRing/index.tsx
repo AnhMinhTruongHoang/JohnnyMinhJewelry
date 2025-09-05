@@ -5,7 +5,8 @@ import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import MaterialSelector from "./ring.material.change";
 import CustomRingModel from "@/Components/CustomRingModel";
 import { Canvas } from "@react-three/fiber";
-import { Environment, OrbitControls, useTexture } from "@react-three/drei";
+import { Environment, OrbitControls } from "@react-three/drei";
+import TaskBar from "@/Components/TaskBar";
 
 /**
  * Props for `CustomRing`.
@@ -13,7 +14,7 @@ import { Environment, OrbitControls, useTexture } from "@react-three/drei";
 export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
-  const [engravingText, setEngravingText] = useState("");
+  const [engravingText, setEngravingText] = useState("Name");
   const [materialMapping, setMaterialMapping] = useState<
     Record<string, "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood">
   >({
@@ -63,19 +64,20 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       {/* Input text*/}
       <div className="items-center text-center">
         <label htmlFor="engraving-text" className="mb-2 block font-medium">
-          <i> Signature</i>
+          <i>Signature</i>
         </label>
         <input
           id="engraving-text"
           type="text"
           value={engravingText}
           onChange={(e) => setEngravingText(e.target.value)}
-          maxLength={6}
+          maxLength={8}
           className="mb-4 rounded border p-2 text-center"
         />
       </div>
 
-      {/* Input text */}
+      {/*Taskbar*/}
+      <TaskBar />
 
       {/* Material selector */}
       <div className="mb-10 mt-6">
