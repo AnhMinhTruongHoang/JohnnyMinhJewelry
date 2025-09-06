@@ -27,6 +27,15 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     Prong001: "ceramic",
   });
 
+  /// download
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/Models/rings/ringb2.glb"; 
+    link.download = "JM-Custom-Ring.glb";
+    link.click();
+  };
+
   ////
   return (
     <section
@@ -77,7 +86,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       </div>
 
       {/*Taskbar*/}
-      <TaskBar />
+      <TaskBar handleDownload={handleDownload} />
 
       {/* Material selector */}
       <div className="mb-10 mt-6">
