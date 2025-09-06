@@ -21,6 +21,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     Circle001: "gold",
     Circle002: "gold",
     Circle004: "gold",
+    Circle006: "silver",
     dobj: "diamond",
     dobj001: "diamond",
     dobj003: "diamond",
