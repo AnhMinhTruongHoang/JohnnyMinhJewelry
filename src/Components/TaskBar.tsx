@@ -3,10 +3,11 @@ import { CheckCheckIcon, ImageDownIcon, RefreshCw } from "lucide-react";
 import JewelryPurchase from "./OderModal";
 
 type Props = {
-  handleDownload: any;
+  handleDownload: () => void;
+  handleRefresh: () => void;
 };
 
-export default function TaskBar({ handleDownload }: Props) {
+export default function TaskBar({ handleDownload, handleRefresh }: Props) {
   const [openModal, SetOpenModal] = useState(false);
 
   return (
@@ -33,6 +34,7 @@ export default function TaskBar({ handleDownload }: Props) {
             <button
               aria-label="Refresh"
               className="text-orange-700 hover:opacity-70"
+              onClick={handleRefresh}
             >
               <RefreshCw size={18} />
             </button>

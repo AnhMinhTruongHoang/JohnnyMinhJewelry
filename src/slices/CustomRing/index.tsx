@@ -1,5 +1,6 @@
 "use client";
-import { FC, Suspense, useState } from "react";
+import * as THREE from "three";
+import { FC, Suspense, useRef, useState } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import MaterialSelector from "./ring.material.change";
@@ -8,16 +9,15 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import TaskBar from "@/Components/TaskBar";
 
-/**
- * Props for `CustomRing`.
- */
 export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
   const [engravingText, setEngravingText] = useState("Name");
-  const [materialMapping, setMaterialMapping] = useState<
-    Record<string, "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood">
-  >({
+
+  const defaultMapping: Record<
+    string,
+    "gold" | "silver" | "ceramic" | "diamond" | "metal" | "wood"
+  > = {
     Circle001: "gold",
     Circle002: "gold",
     Circle004: "gold",
@@ -25,38 +25,53 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     dobj001: "diamond",
     dobj003: "diamond",
     Prong001: "ceramic",
-  });
-
-  /// download
-
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = "/Models/rings/ringb2.glb"; 
-    link.download = "JM-Custom-Ring.glb";
-    link.click();
   };
 
-  ////
+  const [materialMapping, setMaterialMapping] = useState(defaultMapping);
+
+  // ref đến API của model
+  const modelRef = useRef<{
+    getScene: () => THREE.Group;
+    resetMaterials: (mapping?: typeof defaultMapping) => void;
+  }>(null);
+
+  const handleDownload = () => {
+    console.log("ok");
+  };
+
+  const handleRefresh = () => {
+    // reset state
+    setEngravingText("Name");
+    setMaterialMapping(defaultMapping);
+
+    // reset vật liệu NGAY với mapping mới (không đợi state)
+    modelRef.current?.resetMaterials(defaultMapping);
+
+    // (tuỳ chọn) đảm bảo sau 1 frame cũng được áp lại
+    requestAnimationFrame(() => {
+      modelRef.current?.resetMaterials(defaultMapping);
+    });
+  };
+
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100"
     >
-      {/* Heading */}
       <div className="mt-16 text-center font-serif text-6xl">
         <i>
           <PrismicRichText field={slice.primary.heading} />
         </i>
       </div>
 
-      {/* Model nhẫn */}
       <div className="flex h-[300px] w-[600px] items-center justify-center">
         <Canvas camera={{ position: [1, 1, 0], fov: 40 }}>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
             <CustomRingModel
+              ref={modelRef}
               scale={3}
               materialMapping={materialMapping}
               engravingText={engravingText}
@@ -70,7 +85,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
           />
         </Canvas>
       </div>
-      {/* Input text*/}
+
       <div className="items-center text-center">
         <label htmlFor="engraving-text" className="mb-2 block font-medium">
           <i>Signature</i>
@@ -85,10 +100,8 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
         />
       </div>
 
-      {/*Taskbar*/}
-      <TaskBar handleDownload={handleDownload} />
+      <TaskBar handleDownload={handleDownload} handleRefresh={handleRefresh} />
 
-      {/* Material selector */}
       <div className="mb-10 mt-6">
         <MaterialSelector
           parts={[
