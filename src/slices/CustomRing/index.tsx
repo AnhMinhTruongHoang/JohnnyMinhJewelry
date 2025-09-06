@@ -36,10 +36,13 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     resetMaterials: (mapping?: typeof defaultMapping) => void;
   }>(null);
 
-  const handleDownload = () => {
+  // SceneShot func
+
+  const handleSceneShot = () => {
     console.log("ok");
   };
 
+  // reset mesh
   const handleRefresh = () => {
     // reset state
     setEngravingText("Name");
@@ -101,7 +104,10 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
         />
       </div>
 
-      <TaskBar handleDownload={handleDownload} handleRefresh={handleRefresh} />
+      <TaskBar
+        handleSceneShot={handleSceneShot}
+        handleRefresh={handleRefresh}
+      />
 
       <div className="mb-10 mt-6">
         <MaterialSelector

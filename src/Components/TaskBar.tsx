@@ -3,11 +3,11 @@ import { CheckCheckIcon, ImageDownIcon, RefreshCw } from "lucide-react";
 import JewelryPurchase from "./OderModal";
 
 type Props = {
-  handleDownload: () => void;
+  handleSceneShot: () => void;
   handleRefresh: () => void;
 };
 
-export default function TaskBar({ handleDownload, handleRefresh }: Props) {
+export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
   const [openModal, SetOpenModal] = useState(false);
 
   return (
@@ -48,12 +48,12 @@ export default function TaskBar({ handleDownload, handleRefresh }: Props) {
             <button
               aria-label="Download"
               className="text-blue-400 hover:opacity-70"
-              onClick={() => handleDownload()}
+              onClick={() => handleSceneShot()}
             >
               <ImageDownIcon size={18} />
             </button>
             <span className="absolute bottom-full left-1/2 mb-1 hidden -translate-x-1/2 rounded bg-black px-2 py-1 text-xs text-white group-hover:block">
-              Download
+              SceneShot
             </span>
           </div>
         </nav>
