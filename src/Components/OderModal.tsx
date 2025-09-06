@@ -15,23 +15,44 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [msg, setMsg] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      email,
-      name,
-      address,
-      phone,
-    });
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: "truonghoanganhminh2000@email.com",
+          subject: "New Jewelry Purchase",
+          text: `
+            Name: ${name}
+            Email: ${email}
+            Phone: ${phone}
+            Address: ${address}
+            Message: ${msg}
+          `,
+        }),
+      });
 
-    NotificationManager.success("Thank you for your purchase", "Success !");
-    setName("");
-    setAddress("");
-    setPhone("");
-    setEmail("");
-    SetOpenModal(false);
+      if (res.ok) {
+        NotificationManager.success("Thank you for your purchase", "Success!");
+        // reset form
+        setName("");
+        setAddress("");
+        setPhone("");
+        setEmail("");
+        setMsg("");
+        SetOpenModal(false);
+      } else {
+        NotificationManager.error("Failed to send email", "Error");
+      }
+    } catch (err) {
+      console.error(err);
+      NotificationManager.error("Something went wrong", "Error");
+    }
   };
 
   return (
@@ -55,6 +76,7 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Email */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium">
                   Email
@@ -118,6 +140,20 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
                     setPhone(onlyNums);
                   }}
                   required
+                />
+              </div>
+
+              {/* Optional message */}
+              <div>
+                <label htmlFor="msg" className="block text-sm font-medium">
+                  Message
+                </label>
+                <textarea
+                  id="msg"
+                  placeholder="Leave a note..."
+                  className="w-full rounded border border-gray-500 bg-transparent px-3 py-2 text-gray-900 placeholder-gray-600"
+                  value={msg}
+                  onChange={(e) => setMsg(e.target.value)}
                 />
               </div>
 
