@@ -5,11 +5,22 @@ import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import MaterialSelector from "./ring.material.change";
 import CustomRingModel from "@/Components/CustomRingModel";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import TaskBar from "@/Components/TaskBar";
 
 export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
+
+// Component tạm để lấy gl
+const SceneShotHelper = ({
+  onReady,
+}: {
+  onReady: (gl: THREE.WebGLRenderer) => void;
+}) => {
+  const { gl } = useThree();
+  onReady(gl);
+  return null;
+};
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
   const [engravingText, setEngravingText] = useState("Name");
@@ -36,22 +47,28 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     resetMaterials: (mapping?: typeof defaultMapping) => void;
   }>(null);
 
-  // SceneShot func
+  // ref lưu WebGLRenderer
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
+  // SceneShot func
   const handleSceneShot = () => {
-    console.log("ok");
+    if (!rendererRef.current) return;
+
+    const gl = rendererRef.current;
+    const dataURL = gl.domElement.toDataURL("image/png"); // ✅ xuất ảnh PNG
+
+    // tải xuống ảnh
+    const link = document.createElement("a");
+    link.href = dataURL;
+    link.download = "JM-Custom-Ring.png";
+    link.click();
   };
 
   // reset mesh
   const handleRefresh = () => {
-    // reset state
     setEngravingText("Name");
     setMaterialMapping(defaultMapping);
-
-    // reset vật liệu NGAY với mapping mới (không đợi state)
     modelRef.current?.resetMaterials(defaultMapping);
-
-    // (tuỳ chọn) đảm bảo sau 1 frame cũng được áp lại
     requestAnimationFrame(() => {
       modelRef.current?.resetMaterials(defaultMapping);
     });
@@ -70,7 +87,10 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       </div>
 
       <div className="flex h-[300px] w-[600px] items-center justify-center">
-        <Canvas camera={{ position: [1, 1, 0], fov: 40 }}>
+        <Canvas
+          camera={{ position: [1, 1, 0], fov: 40 }}
+          gl={{ preserveDrawingBuffer: true }}
+        >
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
@@ -87,6 +107,8 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
             environmentIntensity={1}
             background={false}
           />
+          {/* helper để lấy gl */}
+          <SceneShotHelper onReady={(gl) => (rendererRef.current = gl)} />
         </Canvas>
       </div>
 

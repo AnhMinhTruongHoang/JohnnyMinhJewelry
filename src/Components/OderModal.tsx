@@ -14,11 +14,13 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     console.log({
+      email,
       name,
       address,
       phone,
@@ -28,6 +30,7 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
     setName("");
     setAddress("");
     setPhone("");
+    setEmail("");
     SetOpenModal(false);
   };
 
@@ -52,6 +55,21 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full rounded border border-gray-500 bg-transparent px-3 py-2 text-gray-900 placeholder-gray-600"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
               {/* Name */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium">

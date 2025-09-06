@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { CheckCheckIcon, ImageDownIcon, RefreshCw } from "lucide-react";
+import {
+  Camera,
+  CameraIcon,
+  CheckCheckIcon,
+  ImageDownIcon,
+  RefreshCw,
+} from "lucide-react";
 import JewelryPurchase from "./OderModal";
 
 type Props = {
@@ -25,7 +31,7 @@ export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
               <CheckCheckIcon size={18} />
             </button>
             <span className="absolute bottom-full left-1/2 mb-1 hidden -translate-x-1/2 rounded bg-black px-2 py-1 text-xs text-white group-hover:block">
-              Confirm
+              <i> Confirm</i>
             </span>
           </div>
 
@@ -39,7 +45,7 @@ export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
               <RefreshCw size={18} />
             </button>
             <span className="absolute bottom-full left-1/2 mb-1 hidden -translate-x-1/2 rounded bg-black px-2 py-1 text-xs text-white group-hover:block">
-              Refresh
+              <i> Refresh</i>
             </span>
           </div>
 
@@ -50,10 +56,10 @@ export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
               className="text-blue-400 hover:opacity-70"
               onClick={() => handleSceneShot()}
             >
-              <ImageDownIcon size={18} />
+              <CameraIcon size={18} />
             </button>
             <span className="absolute bottom-full left-1/2 mb-1 hidden -translate-x-1/2 rounded bg-black px-2 py-1 text-xs text-white group-hover:block">
-              SceneShot
+              <i> SceneShot</i>
             </span>
           </div>
         </nav>
