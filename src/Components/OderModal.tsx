@@ -25,15 +25,11 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          to: "truonghoanganhminh2000@email.com",
-          subject: "New Jewelry Purchase",
-          text: `
-            Name: ${name}
-            Email: ${email}
-            Phone: ${phone}
-            Address: ${address}
-            Message: ${msg}
-          `,
+          name,
+          email,
+          phone,
+          address,
+          msg,
         }),
       });
 

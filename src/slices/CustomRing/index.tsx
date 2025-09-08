@@ -48,16 +48,18 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
   }>(null);
 
   // ref lưu WebGLRenderer
+
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
   // SceneShot func
+
   const handleSceneShot = () => {
     if (!rendererRef.current) return;
 
     const gl = rendererRef.current;
     const dataURL = gl.domElement.toDataURL("image/png"); // ✅ xuất ảnh PNG
 
-    // tải xuống ảnh
+    // download
     const link = document.createElement("a");
     link.href = dataURL;
     link.download = "JM-Custom-Ring.png";

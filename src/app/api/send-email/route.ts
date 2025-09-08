@@ -5,18 +5,19 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
-    const { to, subject, text } = await req.json();
+    const body = await req.json();
+    const { name, email, phone, address, msg } = body;
 
-    await resend.emails.send({
-      from: "truonghoanganhminh2000.com",
-      to,
-      subject,
-      text,
+    const data = await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>", // bắt buộc dùng sender này khi chưa verify domain
+      to: "truonghoanganhminh2000@gmail.com", // email bạn muốn nhận
+      subject: "New Jewelry Purchase",
+      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\nMessage: ${msg}`,
     });
 
-    return NextResponse.json({ success: true });
-  } catch (err: any) {
-    console.error(err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ success: true, data });
+  } catch (error) {
+    console.error("Resend error:", error);
+    return NextResponse.json({ success: false, error }, { status: 500 });
   }
 }

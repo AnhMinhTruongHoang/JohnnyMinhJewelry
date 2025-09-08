@@ -120,7 +120,7 @@ const CustomRingModel = forwardRef<
     if (!scene) return;
     scene.traverse((child: any) => {
       if (child.isMesh) {
-        console.log("Mesh name:", child.name);
+        // console.log("Mesh name:", child.name);
         const matType = materialMapping[child.name as keyof Mapping];
         if (matType && materialCache[matType]) {
           child.material = materialCache[matType];

@@ -20,6 +20,7 @@
     "@prismicio/next": "^1.6.0",
     "@prismicio/react": "^2.8.0",
     "@radix-ui/react-slot": "^1.2.3",
+    "@react-email/components": "^0.5.2",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "@types/three": "^0.167.2",
