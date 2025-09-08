@@ -17,11 +17,13 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
 
+  //// send mail
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/send-email", {
+      const res = await fetch("/api/emails", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

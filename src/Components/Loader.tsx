@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 
 export default function FullScreenLoader() {
   const { progress } = useProgress();
+  const [displayProgress, setDisplayProgress] = useState(0);
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    setDisplayProgress((prev) => Math.max(prev, progress));
+
     if (progress === 100) {
-      // delay ms để tránh flicker
-      const timeout = setTimeout(() => setShow(false), 300);
+      const timeout = setTimeout(() => setShow(false), 500);
       return () => clearTimeout(timeout);
     }
   }, [progress]);
@@ -20,7 +22,7 @@ export default function FullScreenLoader() {
   return (
     <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white">
       <span className="text-lg font-semibold text-[#5e2d2d]">Loading...</span>
-      <span className="mt-2 text-gray-600">{progress.toFixed(0)}%</span>
+      <span className="mt-2 text-gray-600">{displayProgress.toFixed(0)}%</span>
     </div>
   );
 }
