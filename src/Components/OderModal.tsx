@@ -8,9 +8,14 @@ import "react-notifications/lib/notifications.css";
 interface IProps {
   openModal: boolean;
   SetOpenModal: (v: boolean) => void;
+  capturedImage: string | null;
 }
 
-export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
+export default function JewelryPurchase({
+  openModal,
+  SetOpenModal,
+  capturedImage,
+}: IProps) {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -32,6 +37,7 @@ export default function JewelryPurchase({ openModal, SetOpenModal }: IProps) {
           phone,
           address,
           msg,
+          imageBase64: capturedImage,
         }),
       });
 

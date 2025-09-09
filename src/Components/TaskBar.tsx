@@ -1,30 +1,34 @@
 import React, { useState } from "react";
-import {
-  Camera,
-  CameraIcon,
-  CheckCheckIcon,
-  ImageDownIcon,
-  RefreshCw,
-} from "lucide-react";
+import { CameraIcon, CheckCheckIcon, RefreshCw } from "lucide-react";
 import JewelryPurchase from "./OderModal";
 
 type Props = {
   handleSceneShot: () => void;
   handleRefresh: () => void;
+  getSceneShot: () => string | null; // ✅ thêm
 };
 
-export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
+export default function TaskBar({
+  handleSceneShot,
+  handleRefresh,
+  getSceneShot,
+}: Props) {
   const [openModal, SetOpenModal] = useState(false);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+
+  const handleOpenConfirm = () => {
+    const shot = getSceneShot();
+    setCapturedImage(shot); // có thể là null nếu gl chưa sẵn sàng, vẫn OK
+    SetOpenModal(true);
+  };
 
   return (
     <>
       <header className="flex items-center justify-end px-6 py-2">
-        {/* Menu + Icons */}
         <nav className="flex items-center gap-6 text-sm text-[#2a1a1a]">
-          {/* Icon 1 */}
           <div className="group relative">
             <button
-              onClick={() => SetOpenModal(true)}
+              onClick={handleOpenConfirm}
               aria-label="Confirm"
               className="text-green-700 hover:opacity-70"
             >
@@ -35,7 +39,6 @@ export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
             </span>
           </div>
 
-          {/* Icon 2 */}
           <div className="group relative">
             <button
               aria-label="Refresh"
@@ -49,12 +52,11 @@ export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
             </span>
           </div>
 
-          {/* Icon 3 */}
           <div className="group relative">
             <button
               aria-label="Download"
               className="text-blue-400 hover:opacity-70"
-              onClick={() => handleSceneShot()}
+              onClick={handleSceneShot}
             >
               <CameraIcon size={18} />
             </button>
@@ -64,7 +66,13 @@ export default function TaskBar({ handleSceneShot, handleRefresh }: Props) {
           </div>
         </nav>
       </header>
-      <JewelryPurchase openModal={openModal} SetOpenModal={SetOpenModal} />
+
+      {/* Truyền ảnh chụp vào modal */}
+      <JewelryPurchase
+        openModal={openModal}
+        SetOpenModal={SetOpenModal}
+        capturedImage={capturedImage}
+      />
     </>
   );
 }

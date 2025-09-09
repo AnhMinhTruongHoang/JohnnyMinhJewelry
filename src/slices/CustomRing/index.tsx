@@ -51,6 +51,13 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
 
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
+  // Chụp ảnh trả về base64 (hoặc null)
+  const getSceneShot = () => {
+    const gl = rendererRef.current;
+    if (!gl) return null;
+    return gl.domElement.toDataURL("image/png");
+  };
+
   // SceneShot func
 
   const handleSceneShot = () => {
@@ -131,6 +138,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
       <TaskBar
         handleSceneShot={handleSceneShot}
         handleRefresh={handleRefresh}
+        getSceneShot={getSceneShot}
       />
 
       <div className="mb-10 mt-6">

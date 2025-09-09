@@ -5,7 +5,7 @@ import PurchaseTemplate from "./PurchaseTemplate";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, address, msg } = await req.json();
+    const { name, email, phone, address, msg, imageBase64 } = await req.json();
 
     // Tạo transporter
     const transporter = nodemailer.createTransport({
@@ -18,17 +18,36 @@ export async function POST(req: Request) {
       },
     });
 
-    // Render HTML email (sync)
-    const emailHtml = await render(
+    // Render HTML email gốc
+    const emailHtmlBase = await render(
       PurchaseTemplate({ name, email, phone, address, msg }),
     );
 
+    const hasImage = !!imageBase64;
+
+    // Nếu có ảnh thì chèn thêm vào HTML
+    const emailHtml = hasImage
+      ? `${emailHtmlBase}<br/><p><b>Preview:</b></p><img src="cid:ringImage" style="max-width: 600px; width: 100%; height: auto;" />`
+      : emailHtmlBase;
+
+    const attachments = hasImage
+      ? [
+          {
+            filename: "ring.png",
+            content: imageBase64.split("base64,")[1], // bỏ prefix data:image/png;base64,
+            encoding: "base64",
+            cid: "Image", // để hiển thị inline
+          },
+        ]
+      : [];
+
     // Gửi mail
     await transporter.sendMail({
-      from: `"JohnnyMinh Jewelry" <${process.env.EMAIL_AUTH_USER}>`,
+      from: `"Johnny Minh & Co Jewelry" <${process.env.EMAIL_AUTH_USER}>`,
       to: email,
       subject: "Order Confirmation",
       html: emailHtml,
+      attachments,
     });
 
     return NextResponse.json({ success: true });
