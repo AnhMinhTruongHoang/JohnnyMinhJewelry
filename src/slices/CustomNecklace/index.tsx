@@ -1,12 +1,14 @@
 "use client";
 
-import { FC, Suspense, useState } from "react";
+import * as THREE from "three";
+import { FC, Suspense, useRef, useState } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import CustomNecklaceModel from "@/Components/CustomNecklaceModel";
 import NecklaceMaterialSelector from "./necklace.material.change";
+import TaskBar from "@/Components/TaskBar";
 
 /**
  * Props for `CustomNecklace`.
@@ -14,7 +16,35 @@ import NecklaceMaterialSelector from "./necklace.material.change";
 export type CustomNecklaceProps =
   SliceComponentProps<Content.CustomNecklaceSlice>;
 
+// Component tạm để lấy gl
+const SceneShotHelper = ({
+  onReady,
+}: {
+  onReady: (gl: THREE.WebGLRenderer) => void;
+}) => {
+  const { gl } = useThree();
+  onReady(gl);
+  return null;
+};
+
 const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
+  const [engravingText, setEngravingText] = useState("Name");
+
+  const defaultMapping: Record<
+    string,
+    | "gold"
+    | "silver"
+    | "ceramic"
+    | "diamond"
+    | "metal"
+    | "wood"
+    | "silk"
+    | "cotton"
+    | "linen"
+  > = {
+    Ribbon: "silk",
+  };
+
   const Band = [
     //// merge mesh
     "nbi01",
@@ -50,6 +80,50 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
     ...Object.fromEntries(Band.map((name) => [name, "silk"])),
   });
 
+  // ref đến API của model
+  const modelRef = useRef<{
+    getScene: () => THREE.Group;
+    resetMaterials: (mapping?: typeof defaultMapping) => void;
+  }>(null);
+
+  // ref lưu WebGLRenderer
+
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+
+  // Chụp ảnh trả về base64 (hoặc null)
+  const getSceneShot = () => {
+    const gl = rendererRef.current;
+    if (!gl) return null;
+    return gl.domElement.toDataURL("image/png");
+  };
+
+  // SceneShot func
+
+  const handleSceneShot = () => {
+    if (!rendererRef.current) return;
+
+    const gl = rendererRef.current;
+    const dataURL = gl.domElement.toDataURL("image/png"); // xuất ảnh PNG
+
+    // download
+    const link = document.createElement("a");
+    link.href = dataURL;
+    link.download = "JM-Custom-Necklace.png";
+    link.click();
+  };
+
+  // reset mesh
+  const handleRefresh = () => {
+    setEngravingText("Name");
+    setMaterialMapping(defaultMapping);
+    modelRef.current?.resetMaterials(defaultMapping);
+    requestAnimationFrame(() => {
+      modelRef.current?.resetMaterials(defaultMapping);
+    });
+  };
+
+  ///
+
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -66,11 +140,16 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
 
       {/* Model nhẫn */}
       <div className="flex h-[450px] w-[600px] items-center justify-center">
-        <Canvas camera={{ fov: 25 }}>
+        <Canvas camera={{ fov: 25 }} gl={{ preserveDrawingBuffer: true }}>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
-            <CustomNecklaceModel scale={3} materialMapping={materialMapping} />
+            <CustomNecklaceModel
+              ref={modelRef}
+              scale={3}
+              materialMapping={materialMapping}
+              engravingText={engravingText}
+            />
           </Suspense>
           <OrbitControls />
           <Environment
@@ -78,8 +157,30 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
             environmentIntensity={1}
             background={false}
           />
+          {/* helper để lấy gl */}
+          <SceneShotHelper onReady={(gl) => (rendererRef.current = gl)} />
         </Canvas>
       </div>
+      {/* input text */}
+      <div className="items-center text-center">
+        <label htmlFor="engraving-text" className="mb-2 block font-medium">
+          <i>Signature</i>
+        </label>
+        <input
+          id="engraving-text"
+          type="text"
+          value={engravingText}
+          onChange={(e) => setEngravingText(e.target.value)}
+          maxLength={8}
+          className="mb-4 rounded border p-2 text-center"
+        />
+      </div>
+      {/* taskbar*/}
+      <TaskBar
+        handleSceneShot={handleSceneShot}
+        handleRefresh={handleRefresh}
+        getSceneShot={getSceneShot}
+      />
 
       {/* Material selector */}
       <div className="mb-5 mt-5">

@@ -105,7 +105,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
           <Suspense fallback={null}>
             <CustomRingModel
               ref={modelRef}
-              scale={3}
+              scale={2}
               materialMapping={materialMapping}
               engravingText={engravingText}
             />
