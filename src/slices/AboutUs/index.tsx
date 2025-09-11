@@ -9,7 +9,7 @@ export default function AboutUsSlice({ slice }: AboutUsProps) {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative h-[600px] w-full"
+      className="relative h-[500px] w-full sm:h-[600px]"
     >
       {/* Background video */}
       <video
@@ -25,17 +25,17 @@ export default function AboutUsSlice({ slice }: AboutUsProps) {
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto flex h-full max-w-6xl items-center px-6">
-        <div className="text-white lg:w-1/2">
-          <h2 className="mb-4 text-center font-serif text-4xl">
+      <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-4 sm:flex-row sm:items-center sm:justify-start sm:px-6">
+        <div className="w-full text-center text-white sm:w-2/3 sm:text-left lg:w-1/2">
+          <h2 className="mb-4 font-serif text-2xl sm:text-3xl lg:text-4xl">
             <PrismicRichText field={slice.primary.heading} />
           </h2>
-          <i className="mb-6 bg-slate-700 leading-relaxed">
+          <i className="mb-6 block text-sm leading-relaxed sm:text-base lg:text-lg">
             <PrismicRichText field={slice.primary.description} />
           </i>
           <hr className="my-6 border-t-2 border-gray-300" />
-          <div>
-            <JmLogo className="h-24 cursor-pointer text-black" />
+          <div className="flex justify-center sm:justify-start">
+            <JmLogo className="h-16 cursor-pointer text-black sm:h-20 lg:h-24" />
           </div>
         </div>
       </div>

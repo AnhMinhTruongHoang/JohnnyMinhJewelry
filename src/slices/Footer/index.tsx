@@ -3,14 +3,7 @@
 import { FC } from "react";
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
-import {
-  siInstagram,
-  siFacebook,
-  siTwitch,
-  siLinkerd,
-  siX,
-  siZalo,
-} from "simple-icons/icons";
+import { siInstagram, siFacebook, siX, siZalo } from "simple-icons/icons";
 import { ArrowUp } from "lucide-react";
 
 export type FooterProps = SliceComponentProps<Content.FooterSlice>;
@@ -20,7 +13,7 @@ const Icon = ({ path }: { path: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    className="size-6"
+    className="h-6 w-6 md:h-5 md:w-5"
   >
     <path d={path} />
   </svg>
@@ -37,16 +30,8 @@ const socialLinks = [
     link: "https://facebook.com/",
     icon: <Icon path={siFacebook.path} />,
   },
-  {
-    name: "Twitter",
-    link: "https://X.com/",
-    icon: <Icon path={siX.path} />,
-  },
-  {
-    name: "LinkedIn",
-    link: "https://zalo.me/",
-    icon: <Icon path={siZalo.path} />,
-  },
+  { name: "Twitter", link: "https://X.com/", icon: <Icon path={siX.path} /> },
+  { name: "Zalo", link: "https://zalo.me/", icon: <Icon path={siZalo.path} /> },
 ];
 
 const support = {
@@ -95,38 +80,43 @@ const Footer: FC<FooterProps> = ({ slice }) => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
     >
-      <footer className="bg-[#191F33]">
+      <footer className="bg-[#191F33] text-[#767E94]">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="grid gap-6 py-16 sm:grid-cols-[40fr_30fr_30fr] md:grid-cols-[40fr_30fr_30fr_30fr]">
+          {/* Grid chính */}
+          <div className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
             {/* Brand & Contact */}
             <div>
-              <a href="/" className="mb-8 flex items-center gap-5 text-white">
+              <a href="/" className="mb-6 flex items-center gap-4 text-white">
                 <img
                   src="/images/logo.png"
-                  className="h-10"
+                  className="h-10 w-auto"
                   alt="Johnny Minh Jewelry"
                 />
-                <h6 className="text-2xl font-semibold tracking-wider">
+                <h6 className="text-xl font-semibold tracking-wide md:text-2xl">
                   Johnny Minh Jewelry
                 </h6>
               </a>
-              <address className="mt-3 text-base font-normal not-italic text-[#767E94]">
-                <p className="mt-3 max-w-64">{contact.address}</p>
-                <p className="mt-3">Phone: {contact.phone}</p>
-                <p className="mt-3">Mail: {contact.email}</p>
+              <address className="space-y-2 text-sm not-italic md:text-base">
+                <p>{contact.address}</p>
+                <p>Phone: {contact.phone}</p>
+                <p>Mail: {contact.email}</p>
               </address>
             </div>
 
             {/* Support */}
             <div>
-              <h6 className="mb-7 text-xl text-white">{support.title}</h6>
-              <ul>
+              <h6 className="mb-4 text-lg font-semibold text-white">
+                {support.title}
+              </h6>
+              <ul className="space-y-2">
                 {support.items.map(({ label, href }) => (
-                  <li
-                    key={label}
-                    className="mt-3 text-base text-[#767E94] transition duration-150 hover:text-white hover:underline hover:decoration-[#D4AF37] hover:underline-offset-8"
-                  >
-                    <a href={href}>{label}</a>
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="underline-offset-4 transition hover:text-white hover:underline hover:decoration-[#D4AF37]"
+                    >
+                      {label}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -134,14 +124,18 @@ const Footer: FC<FooterProps> = ({ slice }) => {
 
             {/* Quick Links */}
             <div>
-              <h6 className="mb-7 text-xl text-white">{quickLinks.title}</h6>
-              <ul>
+              <h6 className="mb-4 text-lg font-semibold text-white">
+                {quickLinks.title}
+              </h6>
+              <ul className="space-y-2">
                 {quickLinks.items.map(({ label, href }) => (
-                  <li
-                    key={label}
-                    className="mt-3 text-base text-[#767E94] transition duration-150 hover:text-white hover:underline hover:decoration-[#D4AF37] hover:underline-offset-8"
-                  >
-                    <a href={href}>{label}</a>
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="underline-offset-4 transition hover:text-white hover:underline hover:decoration-[#D4AF37]"
+                    >
+                      {label}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -149,14 +143,18 @@ const Footer: FC<FooterProps> = ({ slice }) => {
 
             {/* Category */}
             <div>
-              <h6 className="mb-7 text-xl text-white">{category.title}</h6>
-              <ul>
+              <h6 className="mb-4 text-lg font-semibold text-white">
+                {category.title}
+              </h6>
+              <ul className="space-y-2">
                 {category.items.map(({ label, href }) => (
-                  <li
-                    key={label}
-                    className="mt-3 text-base text-[#767E94] transition duration-150 hover:text-white hover:underline hover:decoration-[#D4AF37] hover:underline-offset-8"
-                  >
-                    <a href={href}>{label}</a>
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="underline-offset-4 transition hover:text-white hover:underline hover:decoration-[#D4AF37]"
+                    >
+                      {label}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -169,23 +167,23 @@ const Footer: FC<FooterProps> = ({ slice }) => {
           <button
             aria-label="ToTheTop"
             onClick={scrollToTop}
-            className="absolute -top-7 right-8 flex size-14 items-center justify-center rounded-full border-[6px] border-[#191F33] bg-[#D4AF37] md:right-16"
+            className="absolute -top-7 right-6 flex h-14 w-14 items-center justify-center rounded-full border-[6px] border-[#191F33] bg-[#D4AF37] transition hover:bg-[#b8932f] md:right-12"
           >
             <ArrowUp color="#fff" size={22} />
           </button>
-          <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-[26px] md:flex-row md:justify-between">
-            <p className="text-center text-[#767E94]">
+          <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 py-6 md:flex-row md:justify-between">
+            <p className="text-center text-sm md:text-base">
               © {new Date().getFullYear()}{" "}
               <span className="text-white">Johnny Minh Jewelry</span>. Crafted
               with ❤️ in Vietnam.
             </p>
-            <ul className="flex items-center gap-6">
+            <ul className="flex items-center gap-5">
               {socialLinks.map(({ name, icon, link }) => (
                 <li key={name}>
                   <a
                     href={link}
                     title={name}
-                    className="text-[#767E94] hover:text-white"
+                    className="text-[#767E94] transition hover:text-white"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
