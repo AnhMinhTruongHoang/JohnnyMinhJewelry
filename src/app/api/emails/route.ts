@@ -34,9 +34,8 @@ export async function POST(req: Request) {
       ? [
           {
             filename: "ring.png",
-            content: imageBase64.split("base64,")[1], // bỏ prefix data:image/png;base64,
-            encoding: "base64",
-            cid: "Image", // để hiển thị inline
+            content: imageBase64.split("base64,")[1],
+            cid: "Image",
           },
         ]
       : [];

@@ -3,8 +3,10 @@
 import dynamic from "next/dynamic";
 
 export const components = {
+  about_us: dynamic(() => import("./AboutUs")),
   custom_necklace: dynamic(() => import("./CustomNecklace")),
   custom_ring: dynamic(() => import("./CustomRing")),
   earrings: dynamic(() => import("./Earrings")),
+  footer: dynamic(() => import("./Footer")),
   hero: dynamic(() => import("./Hero")),
 };
