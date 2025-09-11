@@ -27,7 +27,7 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative flex min-h-screen flex-col items-center justify-center bg-purple-300"
+      className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100"
     >
       {/* Heading */}
       <div className="mt-16 text-center font-serif text-6xl">
@@ -37,7 +37,7 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
       </div>
 
       {/* Model nhẫn */}
-      <div className="flex h-[600px] w-[600px] mt-16 items-center justify-center">
+      <div className="mt-16 flex h-[600px] w-[600px] items-center justify-center">
         <Canvas camera={{ position: [0, 0, 10], fov: 25 }}>
           <ambientLight intensity={1} />
           <directionalLight position={[5, 5, 5]} />

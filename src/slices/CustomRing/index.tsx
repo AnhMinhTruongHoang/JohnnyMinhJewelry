@@ -64,7 +64,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
     if (!rendererRef.current) return;
 
     const gl = rendererRef.current;
-    const dataURL = gl.domElement.toDataURL("image/png"); // ✅ xuất ảnh PNG
+    const dataURL = gl.domElement.toDataURL("image/png"); // xuất ảnh PNG
 
     // download
     const link = document.createElement("a");

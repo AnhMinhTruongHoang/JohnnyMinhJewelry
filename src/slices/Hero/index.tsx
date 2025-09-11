@@ -26,34 +26,36 @@ const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
       >
         <div className="relative z-[100]">
           {/* Scene 1 */}
-          <View className="alternating-text-view absolute left-0 top-0 h-screen w-full">
+          <View className="absolute left-0 top-0 h-screen w-full">
             <Suspense fallback={null}>
               <Scene />
             </Suspense>
           </View>
 
-          <section className="alternating-section ml-24 grid h-screen place-items-center gap-x-12 md:grid-cols-2">
-            <div className="rounded-lg p-4 backdrop-blur-lg max-md:bg-white/30 md:col-start-2 md:ml-12">
-              <h2 className="mb-4 text-6xl font-bold text-[#5e2d2d]">
+          <section className="alternating-section grid h-screen place-items-center px-6 md:grid-cols-2 md:gap-x-12">
+            <div className="rounded-lg p-4 max-md:bg-white/60 max-md:backdrop-blur-sm md:col-start-2 md:ml-12">
+              <h2 className="mb-4 text-3xl font-bold text-[#5e2d2d] md:text-6xl">
                 <PrismicText field={slice.primary.Heading} />
               </h2>
-              <i className="mt-6 text-xl">
+              <i className="mt-6 text-base leading-relaxed md:text-xl">
                 <PrismicRichText field={slice.primary.body} />
               </i>
             </div>
           </section>
+
           {/* Scene 2 */}
           <View className="absolute left-0 top-[100vh] h-screen w-full">
             <Suspense fallback={null}>
               <SceneNecklace />
             </Suspense>
           </View>
-          <section className="alternating-section grid h-screen place-items-center gap-x-12 md:grid-cols-2">
-            <div className="rounded-lg p-4 backdrop-blur-lg max-md:bg-white/30 md:col-start-1">
-              <h2 className="mb-4 text-6xl font-bold text-[#5e2d2d]">
+
+          <section className="alternating-section grid h-screen place-items-center px-6 md:grid-cols-2 md:gap-x-12">
+            <div className="rounded-lg p-4 max-md:bg-white/60 max-md:backdrop-blur-sm md:col-start-1">
+              <h2 className="mb-4 text-3xl font-bold text-[#5e2d2d] md:text-6xl">
                 <PrismicText field={slice.primary.second_heading} />
               </h2>
-              <i className="mt-4 text-xl">
+              <i className="mt-4 text-base leading-relaxed md:text-xl">
                 <PrismicRichText field={slice.primary.second_body} />
               </i>
             </div>
