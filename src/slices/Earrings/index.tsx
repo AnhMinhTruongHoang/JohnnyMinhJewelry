@@ -81,7 +81,7 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
       </div>
 
       {/* Model */}
-      <div className="mt-16 flex h-[600px] w-[600px] items-center justify-center">
+      <div className="mt-16 flex h-[350px] w-[600px] items-center justify-center">
         <Canvas
           camera={{ position: [0, 0, 10], fov: 25 }}
           gl={{ preserveDrawingBuffer: true }}
@@ -93,7 +93,7 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
               ref={modelRef}
               scale={0.5}
               materialMapping={materialMapping}
-              rotation={[0, Math.PI / 4, 0]}
+              rotation={[0, Math.PI / 8, 0]}
             />
           </Suspense>
           <OrbitControls />
