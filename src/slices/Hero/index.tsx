@@ -22,17 +22,19 @@ const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
       <Bounded
         data-slice-type={slice.slice_type}
         data-slice-variation={slice.variation}
-        className="alternating-text-container relative"
+        className="alternating-text-container"
       >
-        <div className="relative z-[100]">
-          {/* Scene 1 */}
-          <View className="absolute left-0 top-0 h-screen w-full">
+        {/* --- SECTION 1 --- */}
+        <section className="relative h-screen">
+          {/* 3D Scene 1 */}
+          <View className="absolute inset-0">
             <Suspense fallback={null}>
               <Scene />
             </Suspense>
           </View>
 
-          <section className="alternating-section grid h-screen place-items-center px-6 md:grid-cols-2 md:gap-x-12">
+          {/* Text */}
+          <div className="relative z-10 grid h-full place-items-center px-6 md:grid-cols-2 md:gap-x-12">
             <div className="rounded-lg p-4 max-md:bg-white/60 max-md:backdrop-blur-sm md:col-start-2 md:ml-12">
               <h2 className="mb-4 text-3xl font-bold text-[#5e2d2d] md:text-6xl">
                 <PrismicText field={slice.primary.Heading} />
@@ -41,16 +43,20 @@ const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
                 <PrismicRichText field={slice.primary.body} />
               </i>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Scene 2 */}
-          <View className="absolute left-0 top-[100vh] h-screen w-full">
+        {/* --- SECTION 2 --- */}
+        <section className="relative h-screen">
+          {/* 3D Scene 2 */}
+          <View className="absolute inset-0">
             <Suspense fallback={null}>
               <SceneNecklace />
             </Suspense>
           </View>
 
-          <section className="alternating-section grid h-screen place-items-center px-6 md:grid-cols-2 md:gap-x-12">
+          {/* Text */}
+          <div className="relative z-10 grid h-full place-items-center px-6 md:grid-cols-2 md:gap-x-12">
             <div className="rounded-lg p-4 max-md:bg-white/60 max-md:backdrop-blur-sm md:col-start-1">
               <h2 className="mb-4 text-3xl font-bold text-[#5e2d2d] md:text-6xl">
                 <PrismicText field={slice.primary.second_heading} />
@@ -59,8 +65,8 @@ const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
                 <PrismicRichText field={slice.primary.second_body} />
               </i>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </Bounded>
     </>
   );
