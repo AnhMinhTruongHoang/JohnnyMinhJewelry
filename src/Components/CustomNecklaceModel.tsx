@@ -35,7 +35,8 @@ type CustomNecklaceModelProps = {
 const CustomNecklaceModel = forwardRef<
   {
     getScene: () => THREE.Group;
-    resetMaterials: (mapping?: Mapping) => void; // <-- nhận mapping
+    resetMaterials: (mapping?: Mapping) => void;
+    getInitialMapping: () => Mapping;
   },
   CustomNecklaceModelProps
 >(({ scale = 1, engravingText = "Text", materialMapping = {} }, ref) => {
@@ -53,7 +54,6 @@ const CustomNecklaceModel = forwardRef<
   const diamondMat = useMaterial({ type: "diamond" });
   const woodMat = useMaterial({ type: "wood" });
   const metalMat = useMaterial({ type: "metal" });
-  ///soft Material
   const linenMat = useSoftMaterial({ type: "linen" });
   const cottonMat = useSoftMaterial({ type: "cotton" });
   const silkMat = useSoftMaterial({ type: "silk" });
@@ -83,11 +83,26 @@ const CustomNecklaceModel = forwardRef<
     ],
   );
 
-  // expose API ra ngoài
+  // lưu mapping ban đầu
+  const initialMappingRef = useRef<Mapping>({});
+
+  useEffect(() => {
+    if (!scene) return;
+    const defaultMap: Mapping = {};
+    scene.traverse((child: any) => {
+      if (child.isMesh) {
+        defaultMap[child.name] =
+          materialMapping[child.name as keyof Mapping] ?? "silver";
+      }
+    });
+    initialMappingRef.current = defaultMap;
+  }, [scene]);
+
+  // expose API
   useImperativeHandle(ref, () => ({
     getScene: () => scene as THREE.Group,
     resetMaterials: (mapping?: Mapping) => {
-      const mapToUse = mapping ?? materialMapping; // ưu tiên mapping truyền vào
+      const mapToUse = mapping ?? initialMappingRef.current;
       scene.traverse((child: any) => {
         if (child.isMesh) {
           const matType = mapToUse[child.name as keyof Mapping];
@@ -98,6 +113,7 @@ const CustomNecklaceModel = forwardRef<
         }
       });
     },
+    getInitialMapping: () => initialMappingRef.current,
   }));
 
   // tạo texture chữ khắc
@@ -136,12 +152,11 @@ const CustomNecklaceModel = forwardRef<
     });
   }, [engravingText]);
 
-  // gán vật liệu ban đầu + tìm vị trí decal
+  // gán vật liệu + decal pos
   useEffect(() => {
     if (!scene) return;
     scene.traverse((child: any) => {
       if (child.isMesh) {
-        // console.log("Mesh name:", child.name);
         const matType = materialMapping[child.name as keyof Mapping];
         if (matType && materialCache[matType]) {
           child.material = materialCache[matType];
