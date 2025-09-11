@@ -21,11 +21,14 @@ export default function JewelryPurchase({
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false); // <- state loading
 
   //// send mail
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (loading) return;
+    setLoading(true);
 
     try {
       const res = await fetch("/api/emails", {
@@ -56,6 +59,8 @@ export default function JewelryPurchase({
     } catch (err) {
       console.error(err);
       NotificationManager.error("Something went wrong", "Error");
+    } finally {
+      setLoading(false); // xong thì reset
     }
   };
 
@@ -164,9 +169,14 @@ export default function JewelryPurchase({
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full rounded bg-slate-400 py-2 text-gray-800 transition hover:bg-green-700"
+                disabled={loading}
+                className={`w-full rounded py-2 text-gray-800 transition ${
+                  loading
+                    ? "cursor-not-allowed bg-gray-400"
+                    : "bg-slate-400 hover:bg-green-700"
+                }`}
               >
-                Confirm Purchase
+                {loading ? "Sending..." : "Confirm Purchase"}
               </button>
             </form>
           </div>

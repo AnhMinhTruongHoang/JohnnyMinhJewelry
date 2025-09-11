@@ -148,6 +148,7 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
 
       {/* Taskbar */}
       <TaskBar
+      
         handleSceneShot={handleSceneShot}
         handleRefresh={handleRefresh}
         getSceneShot={getSceneShot}

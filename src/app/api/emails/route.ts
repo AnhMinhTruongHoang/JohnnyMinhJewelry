@@ -7,7 +7,6 @@ export async function POST(req: Request) {
   try {
     const { name, email, phone, address, msg, imageBase64 } = await req.json();
 
-    // Tạo transporter
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: 587,
@@ -18,29 +17,30 @@ export async function POST(req: Request) {
       },
     });
 
-    // Render HTML email gốc
     const emailHtmlBase = await render(
       PurchaseTemplate({ name, email, phone, address, msg }),
     );
 
     const hasImage = !!imageBase64;
 
-    // Nếu có ảnh thì chèn thêm vào HTML
     const emailHtml = hasImage
-      ? `${emailHtmlBase}<br/><p><b>Preview:</b></p><img src="cid:ringImage" style="max-width: 600px; width: 100%; height: auto;" />`
+      ? `${emailHtmlBase}
+         <br/>
+         <p><b>Preview:</b></p>
+         <img src="cid:ringImage" style="max-width: 600px; width: 100%; height: auto;" />`
       : emailHtmlBase;
 
     const attachments = hasImage
       ? [
           {
-            filename: "ring.png",
+            filename: "Jewelry.png",
             content: imageBase64.split("base64,")[1],
-            cid: "Image",
+            encoding: "base64",
+            cid: "ringImage",
           },
         ]
       : [];
 
-    // Gửi mail
     await transporter.sendMail({
       from: `"Johnny Minh & Co Jewelry" <${process.env.EMAIL_AUTH_USER}>`,
       to: email,

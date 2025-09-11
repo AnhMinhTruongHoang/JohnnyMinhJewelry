@@ -119,14 +119,14 @@ const CustomNecklaceModel = forwardRef<
   // tạo texture chữ khắc
   useEffect(() => {
     const canvas = document.createElement("canvas");
-    canvas.width = 700;
-    canvas.height = 300;
+    canvas.width = 1024;
+    canvas.height = 512;
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
-    let fontSize = 90;
+    let fontSize = 100;
     const font = new FontFace(
       "SignRathi",
       "url(/fonts/FzSignRathi_Update.ttf)",
