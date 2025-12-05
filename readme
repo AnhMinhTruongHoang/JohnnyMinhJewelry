@@ -1,0 +1,33 @@
+💍 JohnnyMinh Jewelry – 3D Custom Jewelry Website
+
+JohnnyMinh Jewelry là một website cho phép người dùng tùy chỉnh trang sức 3D (nhẫn, vòng tay, dây chuyền...) trực tiếp trên trình duyệt.
+Dự án được xây dựng với Three.js, React, Vite, và hướng tới trải nghiệm tùy chỉnh sản phẩm theo thời gian thực.
+
+🔗 Live Demo: https://johnny-minh-jewelry.vercel.app
+
+🔗 GitHub Repo: https://github.com/AnhMinhTruongHoang/JohnnyMinhJewelry
+
+✨ Tính năng nổi bật
+🔧 Tùy chỉnh trang sức 3D theo thời gian thực
+
+Chọn mẫu trang sức
+
+Thay đổi chất liệu (vàng, bạc, kim loại…)
+
+Điều chỉnh màu sắc, hiệu ứng ánh sáng
+
+Xoay, zoom, quan sát vật thể theo góc 360°
+
+🎨 Giao diện UI hiện đại
+
+Thiết kế tối giản
+
+Màu sắc sang trọng phong cách thương hiệu jewelry
+
+⚡ Hiệu năng tối ưu
+
+Render nhanh với Three.js
+
+Build bằng Vite giúp tốc độ tải rất nhanh
+
+Hãy tặng sao mình nếu các bạn thích dự án.
