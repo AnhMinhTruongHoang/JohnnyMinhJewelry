@@ -69,10 +69,11 @@ const EarringsSlice: FC<CustomEarringProps> = ({ slice }) => {
 
   return (
     <section
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
-      className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100"
-    >
+  data-slice-type={slice.slice_type}
+  data-slice-variation={slice.variation}
+  className="relative flex min-h-screen w-full max-w-[100vw] flex-col items-center justify-center overflow-x-hidden px-4 py-16 sm:px-6"
+  style={{ backgroundColor: "#F5EFE7" }}
+>
       {/* Heading */}
       <div className="mt-16 text-center font-serif text-6xl">
         <i>

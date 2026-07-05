@@ -6,30 +6,51 @@ type Props = {};
 
 export default function Header({}: Props) {
   return (
-    <header className="flex items-center justify-between px-6 py-2">
-      {/* Logo */}
-      <div>
+    <header className="relative z-30 flex w-full items-start justify-between gap-3 px-4 py-4 sm:items-center sm:px-6 sm:py-3 md:px-8">
+      {/* Brand text */}
+      <div className="min-w-0 max-w-[120px] shrink text-left sm:max-w-none">
         <b>
-          <i>JOHNNY MINH & CO</i>
+          <i className="block text-xs leading-5 tracking-wide text-black sm:text-sm md:text-base">
+            JOHNNY
+            <br className="sm:hidden" />
+            <span className="sm:inline"> MINH &amp; CO</span>
+          </i>
         </b>
       </div>
-      <div>
-        <JmLogo className="h-24 cursor-pointer" />
+
+      {/* Logo */}
+      <div className="absolute left-1/2 top-3 -translate-x-1/2 sm:static sm:translate-x-0">
+        <JmLogo className="h-12 w-auto cursor-pointer sm:h-16 md:h-24" />
       </div>
 
       {/* Menu + Icons */}
-      <nav className="flex items-center gap-6 text-sm text-[#2a1a1a]">
-        <a href="#about" className="hover:underline">
+      <nav className="flex shrink-0 items-center justify-end gap-2 text-xs text-[#2a1a1a] sm:gap-4 sm:text-sm md:gap-6">
+        <a href="#about" className="hidden hover:underline sm:inline">
           About
         </a>
-        <button aria-label="Sound" className="hover:opacity-70">
-          <Volume2 size={18} />
+
+        <button
+          type="button"
+          aria-label="Sound"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25 hover:opacity-70 sm:h-auto sm:w-auto sm:bg-transparent"
+        >
+          <Volume2 size={16} className="sm:h-[18px] sm:w-[18px]" />
         </button>
-        <button aria-label="Refresh" className="hover:opacity-70">
-          <RefreshCw size={18} />
+
+        <button
+          type="button"
+          aria-label="Refresh"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25 hover:opacity-70 sm:h-auto sm:w-auto sm:bg-transparent"
+        >
+          <RefreshCw size={16} className="sm:h-[18px] sm:w-[18px]" />
         </button>
-        <button aria-label="Dark Mode" className="hover:opacity-70">
-          <Moon size={18} />
+
+        <button
+          type="button"
+          aria-label="Dark Mode"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25 hover:opacity-70 sm:h-auto sm:w-auto sm:bg-transparent"
+        >
+          <Moon size={16} className="sm:h-[18px] sm:w-[18px]" />
         </button>
       </nav>
     </header>

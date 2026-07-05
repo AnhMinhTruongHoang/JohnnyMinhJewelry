@@ -7,35 +7,40 @@ export type AboutUsProps = SliceComponentProps<Content.AboutUsSlice>;
 export default function AboutUsSlice({ slice }: AboutUsProps) {
   return (
     <section
+      id="about"
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative h-[500px] w-full sm:h-[600px]"
+      className="relative w-full max-w-[100vw] overflow-hidden bg-black"
     >
-      {/* Background video */}
-      <video
-        className="absolute inset-0 h-full w-full object-cover"
-        src="/video/aboutVid.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+      <div className="relative min-h-[520px] w-full overflow-hidden sm:min-h-[600px] md:min-h-[680px]">
+        {/* Background video */}
+        <video
+            className="absolute inset-0 h-full w-full scale-[1.42] object-cover object-center sm:scale-[1.25] lg:scale-110"
+            src="/video/aboutVid.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/45" />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+        {/* Content */}
+        <div className="relative z-10 mx-auto flex min-h-[520px] w-full max-w-6xl items-center justify-center px-5 py-12 sm:min-h-[600px] sm:px-6 md:min-h-[680px] lg:px-8">
+          <div className="w-full max-w-[720px] text-center text-white sm:max-w-[760px] lg:max-w-[620px] lg:text-left">
+            <div className="about-title mb-4 font-serif text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
+              <PrismicRichText field={slice.primary.heading} />
+            </div>
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-4 sm:flex-row sm:items-center sm:justify-start sm:px-6">
-        <div className="w-full text-center text-white sm:w-2/3 sm:text-left lg:w-1/2">
-          <h2 className="mb-4 font-serif text-2xl sm:text-3xl lg:text-4xl">
-            <PrismicRichText field={slice.primary.heading} />
-          </h2>
-          <i className="mb-6 block text-sm leading-relaxed sm:text-base lg:text-lg">
-            <PrismicRichText field={slice.primary.description} />
-          </i>
-          <hr className="my-6 border-t-2 border-gray-300" />
-          <div className="flex justify-center sm:justify-start">
-            <JmLogo className="h-16 cursor-pointer text-black sm:h-20 lg:h-24" />
+            <div className="about-desc mx-auto max-w-[620px] text-sm italic leading-7 text-white/95 sm:text-base sm:leading-8 lg:mx-0 lg:text-lg lg:leading-9">
+              <PrismicRichText field={slice.primary.description} />
+            </div>
+
+            <hr className="mx-auto my-6 max-w-[520px] border-t-2 border-white/60 sm:my-8 lg:mx-0" />
+
+            <div className="flex justify-center lg:justify-start">
+              <JmLogo className="h-14 cursor-pointer text-black sm:h-20 lg:h-24" />
+            </div>
           </div>
         </div>
       </div>

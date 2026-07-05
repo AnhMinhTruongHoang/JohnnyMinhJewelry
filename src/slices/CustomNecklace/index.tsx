@@ -96,10 +96,11 @@ const CustomNecklaceSlice: FC<CustomNecklaceProps> = ({ slice }) => {
 
   return (
     <section
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
-      className="relative flex min-h-screen flex-col items-center justify-center bg-neutral-900 text-white"
-    >
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+    className="relative flex min-h-screen w-full max-w-[100vw] flex-col items-center justify-center overflow-x-hidden px-4 py-16 text-white sm:px-6"
+    style={{ backgroundColor: "#11100D" }}
+  >
       {/* Heading */}
       <hr />
       <div className="mt-36 text-center font-serif text-6xl">
