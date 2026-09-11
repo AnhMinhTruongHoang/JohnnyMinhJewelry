@@ -1,6 +1,6 @@
 "use client";
 import * as THREE from "three";
-import { FC, Suspense, useRef, useState } from "react";
+import { FC, Suspense, useEffect, useRef, useState } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import MaterialSelector from "./ring.material.change";
@@ -8,6 +8,7 @@ import CustomRingModel from "@/Components/CustomRingModel";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import TaskBar from "@/Components/TaskBar";
+import { MousePointer2 } from "lucide-react";
 
 export type CustomRingProps = SliceComponentProps<Content.CustomRingSlice>;
 
@@ -24,6 +25,16 @@ const SceneShotHelper = ({
 
 const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
   const [engravingText, setEngravingText] = useState("Name");
+  const [showRotateHint, setShowRotateHint] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowRotateHint(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const defaultMapping: Record<
     string,
@@ -85,24 +96,25 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
 
   return (
     <section
-    data-slice-type={slice.slice_type}
-    data-slice-variation={slice.variation}
-    className="relative flex min-h-screen w-full max-w-[100vw] flex-col items-center justify-center overflow-x-hidden px-4 py-16 sm:px-6"
-    style={{ backgroundColor: "#F7F0E6" }}
-  >
+      data-slice-type={slice.slice_type}
+      data-slice-variation={slice.variation}
+      className="relative flex min-h-screen w-full max-w-[100vw] flex-col items-center justify-center overflow-x-hidden px-4 py-16 sm:px-6"
+      style={{ backgroundColor: "#F7F0E6" }}
+    >
       <div className="mt-16 text-center font-serif text-6xl">
         <i>
           <PrismicRichText field={slice.primary.heading} />
         </i>
       </div>
 
-      <div className="flex h-[300px] w-[600px] items-center justify-center">
+      <div className="relative flex h-[300px] w-full max-w-[600px] items-center justify-center">
         <Canvas
           camera={{ position: [1, 1, 0], fov: 40 }}
           gl={{ preserveDrawingBuffer: true }}
         >
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} />
+
           <Suspense fallback={null}>
             <CustomRingModel
               ref={modelRef}
@@ -111,15 +123,41 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
               engravingText={engravingText}
             />
           </Suspense>
-          <OrbitControls />
+
+          <OrbitControls
+            enablePan={false}
+            enableZoom
+            enableRotate
+            enableDamping
+            dampingFactor={0.08}
+            autoRotate={autoRotate}
+            autoRotateSpeed={0.7}
+            onStart={() => {
+              setAutoRotate(false);
+              setShowRotateHint(false);
+            }}
+          />
+
           <Environment
-            files={"/HDR/lobby.hdr"}
+            files="/HDR/lobby.hdr"
             environmentIntensity={1}
             background={false}
           />
-          {/* helper để lấy gl */}
+
           <SceneShotHelper onReady={(gl) => (rendererRef.current = gl)} />
         </Canvas>
+
+        {showRotateHint && (
+          <div className="pointer-events-none absolute bottom-3 left-1/2 z-20 -translate-x-1/2">
+            <div className="flex items-center gap-2 rounded-full border border-[#5e2d2d]/15 bg-white/80 px-4 py-2 text-xs font-medium text-[#5e2d2d] shadow-md backdrop-blur-md">
+              <MousePointer2 className="h-4 w-4 animate-pulse" />
+
+              <span>Drag to rotate</span>
+
+              <span className="text-base">↔</span>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="items-center text-center">

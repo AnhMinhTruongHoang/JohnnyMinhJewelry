@@ -41,19 +41,7 @@ export default function Hero() {
                 Ecommerce
               </h1>
 
-              <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#6b4b4b] sm:text-base md:mx-0 md:mt-6 md:text-xl md:leading-8">
-                The most realistic showcase for luxury products. Upload, Render,
-                Embed and Share 3D models at scale.
-              </p>
-
-              <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:justify-start">
-                <a
-                  href="#contact"
-                  className="inline-flex min-w-[150px] items-center justify-center rounded-xl bg-[#2e2020] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
-                >
-                  Book a Demo
-                </a>
-
+              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
                   href="#about"
                   className="inline-flex min-w-[150px] items-center justify-center rounded-xl border border-[#7a5a5a]/25 bg-white/35 px-6 py-3 text-sm font-medium text-[#5e2d2d] backdrop-blur-sm transition hover:bg-white/55"
@@ -78,10 +66,6 @@ export default function Hero() {
                   </div>
                 ))}
               </div>
-
-              <p className="mt-3 text-center text-xs italic text-[#7a5a5a] md:text-left">
-                * Tạm thời dùng text placeholder, bạn thay logo brand sau.
-              </p>
             </div>
           </div>
         </div>
