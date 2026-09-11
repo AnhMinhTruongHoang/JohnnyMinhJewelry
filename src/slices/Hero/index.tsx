@@ -40,16 +40,14 @@ export default function Hero() {
                 <br />
                 Ecommerce
               </h1>
-
               <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
-                  href="#about"
+                  href="#custom-ring"
                   className="inline-flex min-w-[150px] items-center justify-center rounded-xl border border-[#7a5a5a]/25 bg-white/35 px-6 py-3 text-sm font-medium text-[#5e2d2d] backdrop-blur-sm transition hover:bg-white/55"
                 >
                   Documentation
                 </a>
               </div>
-
               <p className="mx-auto mt-8 max-w-2xl text-sm leading-7 text-[#6c4e4e] sm:text-base md:mx-0">
                 Design houses, retailers, manufacturers, and agencies rely on
                 immersive product presentation to display their most important

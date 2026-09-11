@@ -96,6 +96,7 @@ const CustomRingSlice: FC<CustomRingProps> = ({ slice }) => {
 
   return (
     <section
+      id="custom-ring"
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       className="relative flex min-h-screen w-full max-w-[100vw] flex-col items-center justify-center overflow-x-hidden px-4 py-16 sm:px-6"
