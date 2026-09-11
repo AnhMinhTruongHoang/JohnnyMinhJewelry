@@ -5,38 +5,40 @@ import { View } from "@react-three/drei";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
-const Loader = dynamic(
+const DreiLoader = dynamic(
   () => import("@react-three/drei").then((mod) => mod.Loader),
   { ssr: false },
 );
 
-type Props = {};
-
-export default function ViewCanvas({}: Props) {
+export default function ViewCanvas() {
   return (
     <>
       <Canvas
         style={{
           position: "fixed",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
+          inset: 0,
+          width: "100vw",
+          height: "100dvh",
           overflow: "hidden",
           pointerEvents: "none",
-          zIndex: 30,
+          zIndex: 10,
         }}
-        shadows
         dpr={[1, 1.5]}
-        gl={{ antialias: true }}
+        gl={{
+          antialias: true,
+          alpha: true,
+        }}
         camera={{
-          fov: 30,
+          fov: 32,
+          position: [0, 0, 5],
         }}
       >
         <Suspense fallback={null}>
           <View.Port />
         </Suspense>
       </Canvas>
-      <Loader />
+
+      <DreiLoader />
     </>
   );
 }

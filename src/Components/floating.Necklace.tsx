@@ -1,6 +1,6 @@
 "use client";
 
-import { Float, useGLTF } from "@react-three/drei";
+import { Center, Float, useGLTF } from "@react-three/drei";
 import { forwardRef, ReactNode } from "react";
 import { Group } from "three";
 import CrossNecklaceModel from "./crossNecklace";
@@ -20,10 +20,10 @@ const FloatingNecklace = forwardRef<Group, FloatingNecklaceProps>(
   (
     {
       scale = 5,
-      floatSpeed = 2,
-      rotationIntensity = 1,
-      floatIntensity = 1,
-      floatingRange = [-0.1, 0.1],
+      floatSpeed = 0.85,
+      rotationIntensity = 0.04,
+      floatIntensity = 0.1,
+      floatingRange = [-0.02, 0.02],
       children,
       ...props
     },
@@ -38,7 +38,11 @@ const FloatingNecklace = forwardRef<Group, FloatingNecklaceProps>(
           floatingRange={floatingRange}
         >
           {children}
-          <CrossNecklaceModel scale={scale} />
+
+          {/* The necklace GLB has an offset origin, so center its geometry first. */}
+          <Center>
+            <CrossNecklaceModel scale={scale} />
+          </Center>
         </Float>
       </group>
     );

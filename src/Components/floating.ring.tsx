@@ -1,6 +1,6 @@
 "use client";
 
-import { Float, useGLTF } from "@react-three/drei";
+import { Center, Float, useGLTF } from "@react-three/drei";
 import { forwardRef, ReactNode } from "react";
 import { Group } from "three";
 import RingModel from "./ring";
@@ -20,10 +20,10 @@ const FloatingRing = forwardRef<Group, FloatingRingProps>(
   (
     {
       scale = 5,
-      floatSpeed = 2,
-      rotationIntensity = 1,
-      floatIntensity = 1,
-      floatingRange = [-0.1, 0.1],
+      floatSpeed = 1,
+      rotationIntensity = 0.1,
+      floatIntensity = 0.1,
+      floatingRange = [-0.02, 0.02],
       children,
       ...props
     },
@@ -38,7 +38,9 @@ const FloatingRing = forwardRef<Group, FloatingRingProps>(
           floatingRange={floatingRange}
         >
           {children}
-          <RingModel scale={scale} />
+          <Center>
+            <RingModel scale={scale} />
+          </Center>
         </Float>
       </group>
     );
